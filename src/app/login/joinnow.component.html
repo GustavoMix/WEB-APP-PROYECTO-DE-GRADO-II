@@ -1,0 +1,64 @@
+<section class="joinnow">
+  <div class="row justify-content-center">
+    <div class="col-lg-6 col-md-8">
+      <div class="card-deck">
+        <div class="card border">
+          <div class="card-body">
+            <!-- Botones para iniciar sesión y registrarse -->
+            <h2 class="card-title text-center mb-4">Bienvenido</h2>
+            <div class="d-flex justify-content-around mb-4">
+              <button type="button" (click)="showLoginForm()" [class.active]="isLoginActive">Iniciar sesión</button>
+              <button type="button" (click)="showRegisterForm()" [class.active]="isRegisterActive">Registrarse</button>
+            </div>
+            <!-- Formulario de inicio de sesión -->
+            <form *ngIf="isLoginFormVisible" (ngSubmit)="onLogin()">
+              <div class="form-group">
+                <label for="email-login">Correo electrónico</label>
+                <input type="email" class="form-control" id="email-login" required [(ngModel)]="loginEmail">
+              </div>
+              <div class="form-group">
+                <label for="password-login">Contraseña</label>
+                <input type="password" class="form-control" id="password-login" required [(ngModel)]="loginPassword">
+              </div>
+              <button type="submit" class="btn btn-primary btn-block mt-4">Ingresar</button>
+            </form> 
+            <!-- Formulario de registro -->
+            <form *ngIf="isRegisterFormVisible" (ngSubmit)="onRegister()">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="first-name">Nombre</label>
+                  <input type="text" class="form-control" id="first-name" required [(ngModel)]="registerFirstName">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="last-name">Apellido</label>
+                  <input type="text" class="form-control" id="last-name" required [(ngModel)]="registerLastName">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="email-register">Correo electrónico</label>
+                <input type="email" class="form-control" id="email-register" required [(ngModel)]="registerEmail">
+              </div>
+              <div class="form-group">
+                <label for="password-register">Contraseña</label>
+                <input type="password" class="form-control" id="password-register" required [(ngModel)]="registerPassword">
+              </div>
+              <div class="form-group">
+                <label for="confirm-password">Confirmar contraseña</label>
+                <input type="password" class="form-control" id="confirm-password" required [(ngModel)]="registerConfirmPassword">
+              </div>
+              <div class="form-group">
+                <label for="phone-number">Teléfono</label>
+                <input type="tel" class="form-control" id="phone-number" required [(ngModel)]="registerPhoneNumber">
+              </div>
+              <div class="form-group">
+                <label for="address">Dirección</label>
+                <input type="text" class="form-control" id="address" required [(ngModel)]="registerAddress">
+              </div>
+              <button type="submit" class="btn btn-primary btn-block mt-4">Registrarse</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

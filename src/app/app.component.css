@@ -1,0 +1,36 @@
+.navbar
+{
+    background-color: #ffffff;
+}
+.navbar-light .navbar-nav .nav-link
+{
+    color: #000000;
+    font-size: 16px;
+}
+
+.navbar-light .navbar-nav .nav-link:hover
+{
+    text-decoration: underline;
+}
+.navbar-brand {
+  font-size: 20px; /* Cambiar el tamaño de fuente */
+  font-weight: bold; /* Hacer el texto en negrita */
+  color: #333; /* Cambiar el color del texto */
+  text-decoration: none; /* Eliminar el subrayado del enlace */
+  transition: all 0.2s ease-in-out; /* Agregar una transición suave */
+}
+
+/* Cambiar el color del texto cuando el mouse está encima */
+.navbar-brand:hover {
+  color: #cc0000;
+}
+
+/* Cambiar el color del texto cuando se hace clic en el enlace */
+.navbar-brand:active {
+  color: #ff0000;
+}
+
+/* Cambiar el margen derecho para separar el enlace del borde derecho */
+.navbar-brand {
+  margin-right: 20px;
+}

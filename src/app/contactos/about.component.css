@@ -1,0 +1,36 @@
+.about {
+    background-color: #f8f9fa; /* Fondo gris claro */
+    padding: 50px 0; /* Espacio arriba y abajo */
+  }
+  
+  .about h1 {
+    color: #333; /* Texto gris oscuro */
+  }
+  
+  .about p {
+    font-size: 18px; /* Tamaño de fuente grande */
+    line-height: 1.5em; /* Espaciado entre líneas */
+    margin-bottom: 20px; /* Espacio abajo */
+  }
+  
+  .follow {
+    margin-top: 50px; /* Espacio arriba */
+  }
+  
+  .follow h4 {
+    color: #333; /* Texto gris oscuro */
+    margin-bottom: 20px; /* Espacio abajo */
+  }
+  
+  .follow a {
+    display: inline-block;
+    background-color: #007bff; /* Fondo azul */
+    color: #fff; /* Texto blanco */
+    border-radius: 5px; /* Bordes redondeados */
+    padding: 10px 20px; /* Espacio arriba y abajo, espacio izquierda y derecha */
+    margin-right: 10px; /* Espacio derecho */
+  }
+  
+  .follow a:hover {
+    background-color: #0056b3; /* Fondo azul oscuro cuando el cursor está encima */
+  }

@@ -1,0 +1,28 @@
+<section class="course">
+  <div class="container">
+    <h1 class="text-center">Objetos Extraviados</h1>
+<input type="text" [(ngModel)]="searchTerm" placeholder="Buscar...">
+    <ul class="search-box">
+      <li><a (click)="setCategory('')"><i class="fas fa-search"></i>Todo</a></li>
+      <li><a  (click)="setCategory('CUADERNOS')"><i class="fas fa-search"></i>CUADERNOS</a></li>
+      <li><a (click)="setCategory('LAPICES')"><i class="fas fa-search"></i>LAPICES</a></li>
+      <li><a  (click)="setCategory('BOLIGRAFOS')"><i class="fas fa-search"></i>BOLIGRAFOS</a></li>
+      <li><a  (click)="setCategory('GOMAS')"><i class="fas fa-search"></i>GOMAS</a></li>
+      <li><a  (click)="setCategory('MOCHILAS')"><i class="fas fa-search"></i>MOCHILAS</a></li>
+      <li><a  (click)="setCategory('CELULARES')"><i class="fas fa-search"></i>CELULARES</a></li>
+      <li><a (click)="setCategory('CREDENCIALES')"><i class="fas fa-search"></i>CREDENCIALES</a></li>
+      <li><a  (click)="setCategory('OTROS')"><i class="fas fa-search"></i>OTROS</a></li>
+    </ul>
+
+    <div class="row mt-5">
+      <div class="col-lg-3 mb-5" *ngFor="let item of filteredItems">
+        <div class="box shadow-sm">
+          <img src="{{item.image}}" width="100%">
+          <h4 class="mt-2">{{item.name}}</h4>
+          <p class="mt-2">{{item.description}}</p>
+          <button class="btn btn-primary btn-sm mt-2">Ver Mas</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
