@@ -28,6 +28,11 @@ export class CourseComponent {
   selectedItem: any = null;
   selectedItemInfo: any = null
 
+  constructor() { }
+
+  ngOnInit(): void {
+  }
+
   get filteredItems() {
     const normalizedSearchTerm = this.normalizeString(this.searchTerm);
     return this.items.filter(item => {

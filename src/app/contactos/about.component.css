@@ -1,3 +1,7 @@
+.joinnow {
+  background-color: #eff6ff;
+  padding: 7% 5%;
+}
 .about {
     background-color: #f8f9fa; /* Fondo gris claro */
     padding: 50px 0; /* Espacio arriba y abajo */
@@ -34,3 +38,23 @@
   .follow a:hover {
     background-color: #0056b3; /* Fondo azul oscuro cuando el cursor está encima */
   }
+
+  /* Estilos para el enlace de Facebook */
+.follow a.facebook {
+  background-color: #3B5998; /* Fondo azul oscuro */
+}
+
+/* Estilos para el enlace de Youtube */
+.follow a.youtube {
+  background-color: #FF0000; /* Fondo rojo */
+}
+
+/* Estilos para el enlace de Instagram */
+.follow a.instagram {
+  background-color: #E4405F; /* Fondo rosa */
+}
+
+/* Estilos para el enlace de Twitter */
+.follow a.twitter {
+  background-color: #1DA1F2; /* Fondo celeste */
+}

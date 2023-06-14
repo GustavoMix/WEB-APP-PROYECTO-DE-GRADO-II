@@ -7,8 +7,8 @@
             <!-- Botones para iniciar sesión y registrarse -->
             <h2 class="card-title text-center mb-4">Bienvenido</h2>
             <div class="d-flex justify-content-around mb-4">
-              <button type="button" (click)="showLoginForm()" [class.active]="isLoginActive">Iniciar sesión</button>
-              <button type="button" (click)="showRegisterForm()" [class.active]="isRegisterActive">Registrarse</button>
+              <button type="button" class="btn btn-primary btn-lg" (click)="showLoginForm()" [class.active]="isLoginActive">Iniciar sesión</button>
+              <button type="button" class="btn btn-danger btn-lg" (click)="showRegisterForm()" [class.active]="isRegisterActive">Registrarse</button>
             </div>
             <!-- Formulario de inicio de sesión -->
             <form *ngIf="isLoginFormVisible" (ngSubmit)="onLogin()">
@@ -22,6 +22,9 @@
               </div>
               <button type="submit" class="btn btn-primary btn-block mt-4">Ingresar</button>
             </form> 
+            <div class="forgot-password-link" style="text-align: center;" >
+              <a href="/">¿Olvidaste tu contraseña?</a>
+            </div>
             <!-- Formulario de registro -->
             <form *ngIf="isRegisterFormVisible" (ngSubmit)="onRegister()">
               <div class="form-row">
@@ -62,3 +65,4 @@
     </div>
   </div>
 </section>
+

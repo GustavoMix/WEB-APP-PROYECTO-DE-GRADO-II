@@ -14,14 +14,34 @@
       <li><a  (click)="setCategory('OTROS')"><i class="fas fa-search"></i>OTROS</a></li>
     </ul>
 
-    <div class="row mt-5">
-      <div class="col-lg-3 mb-5" *ngFor="let item of filteredItems">
-        <div class="box shadow-sm">
+    <div class="d-flex flex-wrap">
+      <div class="col-lg-4 mb-5" *ngFor="let item of filteredItems">
+        <div class="box shadow-sm" id="{{item.id}}">
           <img src="{{item.image}}" width="100%">
           <h4 class="mt-2">{{item.name}}</h4>
           <p class="mt-2">{{item.description}}</p>
-          <button class="btn btn-primary btn-sm mt-2">Ver Mas</button>
+    
+          <!-- Agrega una sección adicional para los detalles -->
+          <div *ngIf="selectedItem === item">
+            <p>Encontrado por: {{ selectedItemInfo.foundBy }}</p>
+            <p>Teléfono de contacto: {{ selectedItemInfo.cellphone }}</p>
+            <!-- Agrega cualquier otro detalle que quieras mostrar -->
+          </div>
+    
+          <!-- Actualiza el botón "Ver Más" para mostrar el modal cuando se hace clic en él -->
+          <button class="btn btn-primary btn-sm mt-2" (click)="showDetails(item)">Ver Más</button>
         </div>
+      </div>
+    </div>
+    
+    <!-- Agrega un div para el modal y ocúltalo inicialmente con CSS -->
+    <div id="myModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close" (click)="hideDetails()">&times;</span>
+        <p>Detalles del objeto seleccionado:</p>
+        <p>Nombre: {{selectedItem?.name}}</p>
+        <p>Descripción: {{selectedItem?.description}}</p>
+        <!-- Agrega cualquier otro detalle que quieras mostrar -->
       </div>
     </div>
   </div>

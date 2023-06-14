@@ -1,0 +1,63 @@
+/* Estilos para los gráficos de barras */
+#lostChart, #recoveredChart, #popularChart, #recoveredItemsChart {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end; /* alinea las barras en la parte inferior del contenedor */
+    height: 100px;
+    width: 300px;
+    border: 1px solid #ddd;
+    margin-bottom: 20px;
+  }
+  
+  .bar {
+    position: relative; /* permite agregar texto dentro de las barras */
+    width: 30%;
+    background-color: #007bff;
+    transition: all .3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,.25); /* añade una sombra suave a las barras */
+  }
+  
+  .bar::before { /* agrega el valor numérico dentro de cada barra */
+    content: attr(data-value);
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: #555;
+  }
+  
+  #lostChart .bar {
+    background-color: #f44336; /* cambia el color de las barras en el primer gráfico */
+  }
+  
+  #recoveredChart .bar {
+    background-color: #4caf50; /* cambia el color de las barras en el segundo gráfico */
+  }
+  
+  #popularChart .bar {
+    background-color: #ff9800; /* cambia el color de las barras en el tercer gráfico */
+  }
+  
+  #recoveredItemsChart .bar {
+    background-color: #9c27b0; /* cambia el color de las barras en el cuarto gráfico */
+  }
+  
+  /* Estilos para las tablas */
+  table {
+    border-collapse: collapse;
+    margin-top: 10px;
+    width: 300px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+    font-size: 14px;
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+  

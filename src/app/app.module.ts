@@ -10,6 +10,8 @@ import { AboutComponent } from './contactos/about.component';
 import { FormsModule } from '@angular/forms';
 import { RegistroObjetosComponent } from './registro-objetos/registro-objetos.component';
 import { ObjetosExtraviadosComponent } from './objetos-extraviados/objetos-extraviados.component';
+import { RegistroActividadComponent } from './registro-actividad/registro-actividad.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 
 @NgModule({
@@ -21,6 +23,8 @@ import { ObjetosExtraviadosComponent } from './objetos-extraviados/objetos-extra
     AboutComponent,
     RegistroObjetosComponent,
     ObjetosExtraviadosComponent,
+    RegistroActividadComponent,
+    EstadisticasComponent,
   ],
   imports: [
     BrowserModule,

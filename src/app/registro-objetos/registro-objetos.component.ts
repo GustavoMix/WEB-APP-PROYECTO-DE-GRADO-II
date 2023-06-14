@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import * as ml5 from 'ml5';
 @Component({
   selector: 'app-registro-objetos',
   templateUrl: './registro-objetos.component.html',
@@ -17,7 +17,7 @@ export class RegistroObjetosComponent implements OnInit {
   itemCategory: string = '';
   selectedFile: File = null;
   selectedFileUrl: any = null;
-
+  predictionResult: any = null;
   constructor() { }
 
   onSubmit(form) {
@@ -35,13 +35,34 @@ export class RegistroObjetosComponent implements OnInit {
     this.selectedFileUrl = null;
   }
 
-  handleFileInput(event) {
+  async handleFileInput(event) {
     this.selectedFile = event.target.files[0];
     if (this.selectedFile) {
       const reader = new FileReader();
       reader.readAsDataURL(this.selectedFile);
-      reader.onload = () => {
-        this.selectedFileUrl = reader.result;
+      reader.onload = async () => {
+        this.selectedFileUrl = reader.result as string;
+
+        // Carga el modelo pre-entrenado de MobileNet
+        const imageModel = await ml5.imageClassifier('MobileNet');
+
+        // Crea un elemento HTML Image y carga la imagen seleccionada
+        const img = new Image();
+        img.src = this.selectedFileUrl;
+
+        // Espera hasta que la imagen se cargue completamente
+        await new Promise((resolve) => (img.onload = resolve));
+
+        // Realiza una predicción sobre la imagen usando el modelo de ml5.js
+        imageModel.classify(img, (err, results) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+
+          // Asigna el resultado de la predicción a la variable predictionResult
+          this.predictionResult = results[0];
+        });
       };
     }
   }

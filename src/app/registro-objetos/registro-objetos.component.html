@@ -1,31 +1,37 @@
+
+<section class="joinnow">
 <div class="container d-flex justify-content-center align-items-center bg-light" style="max-height: 90vh;">
   <div class="card w-100 w-sm-75 w-md-50 w-lg-25 mt-5">
-    <h1 class="card-header text-center bg-secondary text-white ">Registrar Objeto Perdido o Encontrado</h1>
-    <div class="card-body">
+    <h1 class="card-header text-center text-black">Registrar Objeto Perdido o Encontrado</h1>
+    <div class="card-body"> 
       <form (ngSubmit)="onSubmit(form)" #form="ngForm">
-        <div class="form-group">
-          <label for="name">Nombre del objeto</label>
-          <input type="text" id="name" name="name" class="form-control" required [(ngModel)]="itemName">
+        <div class="form-row">
+          <div class="col-md-6 mb-3">
+            <label for="name">Nombre del objeto</label>
+            <input type="text" id="name" name="name" class="form-control" required [(ngModel)]="itemName">
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="category">Categoría del objeto</label>
+            <select id="category" name="category" class="form-control" required [(ngModel)]="itemCategory">
+              <option value="">--Seleccione una opción--</option>
+              <option value="perdido">Perdido</option>
+              <option value="encontrado">Encontrado</option>
+            </select>
+          </div>
         </div>
         <div class="form-group">
           <label for="description">Descripción del objeto</label>
           <textarea id="description" name="description" class="form-control" rows="3" required [(ngModel)]="itemDescription"></textarea>
         </div>
-        <div class="form-group">
-          <label for="category">Categoría del objeto</label>
-          <select id="category" name="category" class="form-control" required [(ngModel)]="itemCategory">
-            <option value="">--Seleccione una opción--</option>
-            <option value="perdido">Perdido</option>
-            <option value="encontrado">Encontrado</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="location">Ubicación donde se perdió o encontró el objeto</label>
-          <input type="text" id="location" name="location" class="form-control" required >
-        </div>
-        <div class="form-group">
-          <label for="date">Fecha en que se perdió o encontró el objeto</label>
-          <input type="date" id="date" name="date" class="form-control" required >
+        <div class="form-row">
+          <div class="col-md-6 mb-3">
+            <label for="location">Ubicación donde se perdió o encontró el objeto</label>
+            <input type="text" id="location" name="location" class="form-control" required >
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="date">Fecha en que se perdió o encontró el objeto</label>
+            <input type="date" id="date" name="date" class="form-control" required >
+          </div>
         </div>
         <div class="form-group">
           <label for="image">Foto del objeto</label>
@@ -33,8 +39,14 @@
             <input type="file" class="custom-file-input" id="image" name="image" accept="image/*" (change)="handleFileInput($event)">
             <label class="custom-file-label" for="image">Seleccione una imagen</label>
           </div>
-          <div *ngIf="selectedFileUrl" class="mt-2">
-            <img [src]="selectedFileUrl" class="img-fluid">
+          <div class="image-result-container">
+            <div *ngIf="selectedFileUrl">
+              <img [src]="selectedFileUrl" class="img-fluid resultado-imagen">
+            </div>
+            <div *ngIf="predictionResult" class="mt-2 ml-2">
+              <p>Objeto detectado: {{ predictionResult.label }}</p>
+              <p>Confianza: {{ predictionResult.confidence }}</p>
+            </div>
           </div>
         </div>
         <div class="form-group text-center">
@@ -44,3 +56,4 @@
     </div>
   </div>
 </div>
+</section>
