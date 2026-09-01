@@ -11,11 +11,20 @@
             <input type="text" id="name" name="name" class="form-control" required [(ngModel)]="itemName">
           </div>
           <div class="col-md-6 mb-3">
-            <label for="category">Categoría del objeto</label>
-            <select id="category" name="category" class="form-control" required [(ngModel)]="itemCategory">
+            <label for="tipo">¿Perdido o encontrado?</label>
+            <select id="tipo" name="tipo" class="form-control" required [(ngModel)]="itemTipo">
               <option value="">--Seleccione una opción--</option>
               <option value="perdido">Perdido</option>
               <option value="encontrado">Encontrado</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-6 mb-3">
+            <label for="category">Categoría del objeto</label>
+            <select id="category" name="category" class="form-control" required [(ngModel)]="itemCategory">
+              <option value="">--Seleccione una opción--</option>
+              <option *ngFor="let cat of categorias" [value]="cat">{{cat}}</option>
             </select>
           </div>
         </div>
@@ -26,11 +35,11 @@
         <div class="form-row">
           <div class="col-md-6 mb-3">
             <label for="location">Ubicación donde se perdió o encontró el objeto</label>
-            <input type="text" id="location" name="location" class="form-control" required >
+            <input type="text" id="location" name="location" class="form-control" required [(ngModel)]="itemLocation">
           </div>
           <div class="col-md-6 mb-3">
             <label for="date">Fecha en que se perdió o encontró el objeto</label>
-            <input type="date" id="date" name="date" class="form-control" required >
+            <input type="date" id="date" name="date" class="form-control" required [(ngModel)]="itemDate">
           </div>
         </div>
         <div class="form-group">

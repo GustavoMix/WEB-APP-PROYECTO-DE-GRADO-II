@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import * as ml5 from 'ml5';
+import { ObjetosService, CATEGORIAS } from '../services/objetos.service';
+import { TipoObjeto } from '../models/objeto.model';
+
 @Component({
   selector: 'app-registro-objetos',
   templateUrl: './registro-objetos.component.html',
@@ -7,32 +11,44 @@ import * as ml5 from 'ml5';
 })
 export class RegistroObjetosComponent implements OnInit {
 
+  categorias = CATEGORIAS;
 
+  itemName = '';
+  itemDescription = '';
+  itemCategory = '';
+  itemTipo: TipoObjeto | '' = '';
+  itemLocation = '';
+  itemDate = '';
+  selectedFile: File = null;
+  selectedFileUrl: any = null;
+  predictionResult: any = null;
+
+  constructor(private objetosService: ObjetosService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  itemName: string = '';
-  itemDescription: string = '';
-  itemCategory: string = '';
-  selectedFile: File = null;
-  selectedFileUrl: any = null;
-  predictionResult: any = null;
-  constructor() { }
-
   onSubmit(form) {
-    // Obtener los valores de los campos del formulario
-    const name = this.itemName;
-    const description = this.itemDescription;
-    const category = this.itemCategory;
-    const file = this.selectedFile;
+    this.objetosService.agregar({
+      name: this.itemName,
+      description: this.itemDescription,
+      category: this.itemCategory,
+      tipo: this.itemTipo as TipoObjeto,
+      location: this.itemLocation,
+      date: this.itemDate,
+      image: this.selectedFileUrl || '',
+      predictionLabel: this.predictionResult?.label,
+      predictionConfidence: this.predictionResult?.confidence
+    });
 
-    // Aquí podrías llamar a un servicio o API para procesar el registro del objeto
+    const destino = this.itemTipo === 'perdido' ? '/perdidos' : '/course';
 
-    // Limpiar el formulario
     form.reset();
     this.selectedFile = null;
     this.selectedFileUrl = null;
+    this.predictionResult = null;
+
+    this.router.navigate([destino]);
   }
 
   async handleFileInput(event) {
@@ -67,5 +83,3 @@ export class RegistroObjetosComponent implements OnInit {
     }
   }
 }
-
-
