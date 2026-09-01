@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light">
-  <a class="navbar-brand" routerLink="">
+  <a class="navbar-brand" routerLink="" routerLinkActive="router-link-active" [routerLinkActiveOptions]="{exact: true}">
     <span class="brand-mark">25</span>
-    <span>Objetos Perdidos · U.E. 25 de Mayo</span>
+    <span class="brand-text">Objetos Perdidos · U.E. 25 de Mayo</span>
   </a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -9,29 +9,29 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav ml-auto">
-      <li class="nav-item active">
-        <a class="nav-link" routerLink="">Inicio <span class="sr-only">(current)</span></a>
+      <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        <a class="nav-link" routerLink=""><i class="fas fa-home"></i> Inicio</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="course">Objetos Encontrados</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="course"><i class="fas fa-box-open"></i> Encontrados</a>
       </li>
-            <li class="nav-item">
-        <a class="nav-link" routerLink="perdidos">Objetos Extraviados</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="perdidos"><i class="fas fa-search"></i> Extraviados</a>
       </li>
-            <li class="nav-item">
-        <a class="nav-link" routerLink="registro">Registrar Objetos</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="registro"><i class="fas fa-plus-circle"></i> Registrar</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="joinnow">Ingresar</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="actividad"><i class="fas fa-history"></i> Actividad</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="about">Contactos</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="estadisticas"><i class="fas fa-chart-bar"></i> Estadísticas</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="actividad">Registro de Actividad</a>
+      <li class="nav-item" routerLinkActive="active">
+        <a class="nav-link" routerLink="about"><i class="fas fa-envelope"></i> Contactos</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="estadisticas">Estadisticas</a>
+      <li class="nav-item ml-lg-2">
+        <a class="nav-link btn btn-primary text-white px-3" routerLink="joinnow">Ingresar</a>
       </li>
     </ul>
   </div>
@@ -39,6 +39,6 @@
 <router-outlet></router-outlet>
 
 <!-- footer -->
-<footer class="text-center mt-2">
-  <p>&copy; Unidad Educativa 25 de Mayo</p>
+<footer class="text-center">
+  <p><i class="fas fa-map-marker-alt"></i> Unidad Educativa 25 de Mayo &nbsp;·&nbsp; &copy; 2026</p>
 </footer>
