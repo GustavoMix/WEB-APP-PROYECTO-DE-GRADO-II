@@ -1,20 +1,22 @@
-.joinnow {
-  background-color: #eff6ff;
-  padding: 7% 5%;
-}
 .about {
     background-color: #f8f9fa; /* Fondo gris claro */
-    padding: 50px 0; /* Espacio arriba y abajo */
+    min-height: 60vh;
   }
-  
+
+  .about-container {
+    max-width: 760px;
+  }
+
   .about h1 {
     color: #333; /* Texto gris oscuro */
+    font-weight: 700;
   }
-  
+
   .about p {
-    font-size: 18px; /* Tamaño de fuente grande */
-    line-height: 1.5em; /* Espaciado entre líneas */
+    font-size: 17px; /* Tamaño de fuente grande */
+    line-height: 1.6em; /* Espaciado entre líneas */
     margin-bottom: 20px; /* Espacio abajo */
+    color: #555;
   }
   
   .follow {
@@ -30,9 +32,20 @@
     display: inline-block;
     background-color: #007bff; /* Fondo azul */
     color: #fff; /* Texto blanco */
-    border-radius: 5px; /* Bordes redondeados */
+    border-radius: 999px; /* Bordes redondeados */
     padding: 10px 20px; /* Espacio arriba y abajo, espacio izquierda y derecha */
-    margin-right: 10px; /* Espacio derecho */
+    margin: 4px; /* Espacio entre botones */
+    font-size: 14px;
+    font-weight: 500;
+    transition: transform 0.15s ease;
+  }
+
+  .follow a:hover {
+    transform: translateY(-2px);
+  }
+
+  .follow a i {
+    margin-right: 6px;
   }
   
   .follow a:hover {

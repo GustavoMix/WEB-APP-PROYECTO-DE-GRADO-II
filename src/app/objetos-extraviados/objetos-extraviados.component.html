@@ -1,21 +1,50 @@
-<section class="course">
-  <div class="container">
-    <h1 class="text-center">Objetos Extraviados</h1>
-<input type="text" [(ngModel)]="searchTerm" placeholder="Buscar...">
-    <ul class="search-box">
-      <li><a (click)="setCategory('')"><i class="fas fa-search"></i>Todo</a></li>
-      <li *ngFor="let cat of categorias"><a (click)="setCategory(cat)"><i class="fas fa-search"></i>{{cat}}</a></li>
+<section class="listado">
+  <div class="page-container">
+    <h1 class="page-title">Objetos Extraviados</h1>
+    <p class="page-subtitle">Objetos que otras personas están buscando. Si alguno es tuyo, contáctanos.</p>
+
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar por nombre o descripción...">
+    </div>
+
+    <ul class="category-pills">
+      <li><a [class.active]="selectedCategory === ''" (click)="setCategory('')">Todo</a></li>
+      <li *ngFor="let cat of categorias"><a [class.active]="selectedCategory === cat" (click)="setCategory(cat)">{{cat}}</a></li>
     </ul>
 
-    <div class="row mt-5">
-      <div class="col-lg-3 mb-5" *ngFor="let item of filteredItems">
-        <div class="box shadow-sm">
-          <img src="{{item.image}}" width="100%">
-          <h4 class="mt-2">{{item.name}}</h4>
-          <p class="mt-2">{{item.description}}</p>
-          <button class="btn btn-primary btn-sm mt-2">Ver Mas</button>
+    <p class="results-count">{{filteredItems.length}} objeto(s) encontrado(s)</p>
+
+    <div class="row">
+      <div class="col-6 col-md-4 col-lg-3 mb-4" *ngFor="let item of filteredItems">
+        <div class="item-card" (click)="showDetails(item)">
+          <div class="item-image">
+            <img [src]="item.image" alt="{{item.name}}">
+            <span class="category-badge">{{item.category}}</span>
+          </div>
+          <div class="item-body">
+            <h4>{{item.name}}</h4>
+            <p>{{item.description}}</p>
+            <button class="btn btn-outline-danger btn-sm">Ver más</button>
+          </div>
         </div>
       </div>
+    </div>
+
+    <div *ngIf="filteredItems.length === 0" class="empty-state">
+      No se encontraron objetos con esos filtros.
+    </div>
+  </div>
+
+  <div class="detail-modal" *ngIf="selectedItem" (click)="hideDetails()">
+    <div class="detail-modal-content" (click)="$event.stopPropagation()">
+      <span class="close" (click)="hideDetails()">&times;</span>
+      <img [src]="selectedItem.image" alt="{{selectedItem.name}}">
+      <h3>{{selectedItem.name}}</h3>
+      <span class="category-badge static">{{selectedItem.category}}</span>
+      <p>{{selectedItem.description}}</p>
+      <p *ngIf="selectedItemInfo?.foundBy">Reportado por: {{selectedItemInfo.foundBy}}</p>
+      <p *ngIf="selectedItemInfo?.cellphone">Contacto: {{selectedItemInfo.cellphone}}</p>
     </div>
   </div>
 </section>

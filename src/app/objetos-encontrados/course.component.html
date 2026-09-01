@@ -1,41 +1,50 @@
-<section class="course">
-  <div class="container">
-    <h1 class="text-center">Objetos Encontrados</h1>
-<input type="text" [(ngModel)]="searchTerm" placeholder="Buscar...">
-    <ul class="search-box">
-      <li><a (click)="setCategory('')"><i class="fas fa-search"></i>Todo</a></li>
-      <li *ngFor="let cat of categorias"><a (click)="setCategory(cat)"><i class="fas fa-search"></i>{{cat}}</a></li>
+<section class="listado">
+  <div class="page-container">
+    <h1 class="page-title">Objetos Encontrados</h1>
+    <p class="page-subtitle">Objetos que alguien encontró. Revisa si alguno es tuyo.</p>
+
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar por nombre o descripción...">
+    </div>
+
+    <ul class="category-pills">
+      <li><a [class.active]="selectedCategory === ''" (click)="setCategory('')">Todo</a></li>
+      <li *ngFor="let cat of categorias"><a [class.active]="selectedCategory === cat" (click)="setCategory(cat)">{{cat}}</a></li>
     </ul>
 
-    <div class="d-flex flex-wrap">
-      <div class="col-lg-4 mb-5" *ngFor="let item of filteredItems">
-        <div class="box shadow-sm" id="{{item.id}}">
-          <img src="{{item.image}}" width="100%">
-          <h4 class="mt-2">{{item.name}}</h4>
-          <p class="mt-2">{{item.description}}</p>
-    
-          <!-- Agrega una sección adicional para los detalles -->
-          <div *ngIf="selectedItem === item">
-            <p>Encontrado por: {{ selectedItemInfo.foundBy }}</p>
-            <p>Teléfono de contacto: {{ selectedItemInfo.cellphone }}</p>
-            <!-- Agrega cualquier otro detalle que quieras mostrar -->
+    <p class="results-count">{{filteredItems.length}} objeto(s) encontrado(s)</p>
+
+    <div class="row">
+      <div class="col-6 col-md-4 col-lg-3 mb-4" *ngFor="let item of filteredItems">
+        <div class="item-card" (click)="showDetails(item)">
+          <div class="item-image">
+            <img [src]="item.image" alt="{{item.name}}">
+            <span class="category-badge">{{item.category}}</span>
           </div>
-    
-          <!-- Actualiza el botón "Ver Más" para mostrar el modal cuando se hace clic en él -->
-          <button class="btn btn-primary btn-sm mt-2" (click)="showDetails(item)">Ver Más</button>
+          <div class="item-body">
+            <h4>{{item.name}}</h4>
+            <p>{{item.description}}</p>
+            <button class="btn btn-outline-danger btn-sm">Ver más</button>
+          </div>
         </div>
       </div>
     </div>
-    
-    <!-- Agrega un div para el modal y ocúltalo inicialmente con CSS -->
-    <div id="myModal" class="modal" style="display:none;">
-      <div class="modal-content">
-        <span class="close" (click)="hideDetails()">&times;</span>
-        <p>Detalles del objeto seleccionado:</p>
-        <p>Nombre: {{selectedItem?.name}}</p>
-        <p>Descripción: {{selectedItem?.description}}</p>
-        <!-- Agrega cualquier otro detalle que quieras mostrar -->
-      </div>
+
+    <div *ngIf="filteredItems.length === 0" class="empty-state">
+      No se encontraron objetos con esos filtros.
+    </div>
+  </div>
+
+  <div class="detail-modal" *ngIf="selectedItem" (click)="hideDetails()">
+    <div class="detail-modal-content" (click)="$event.stopPropagation()">
+      <span class="close" (click)="hideDetails()">&times;</span>
+      <img [src]="selectedItem.image" alt="{{selectedItem.name}}">
+      <h3>{{selectedItem.name}}</h3>
+      <span class="category-badge static">{{selectedItem.category}}</span>
+      <p>{{selectedItem.description}}</p>
+      <p *ngIf="selectedItemInfo?.foundBy">Encontrado por: {{selectedItemInfo.foundBy}}</p>
+      <p *ngIf="selectedItemInfo?.cellphone">Teléfono de contacto: {{selectedItemInfo.cellphone}}</p>
     </div>
   </div>
 </section>

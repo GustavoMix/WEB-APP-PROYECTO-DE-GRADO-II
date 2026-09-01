@@ -1,17 +1,37 @@
 .joinnow {
-  background-color: #eff6ff;
+  background-color: var(--bg-soft, #f5f6fa);
   padding: 3% 5%;
+  min-height: 60vh;
 }
 .card-header {
   border-bottom: none;
+  background: linear-gradient(135deg, #b80000, #7a0000);
+  color: #fff;
+  font-size: 20px;
+  padding: 22px 20px;
+  border-radius: 12px 12px 0 0 !important;
 }
 
 label {
-  font-weight: bold;
+  font-weight: 500;
+  font-size: 14px;
+  color: #4a4a52;
 }
 
 .form-control {
-  border-radius: 0;
+  border-radius: 8px;
+  border-color: #e2e2e8;
+}
+
+.form-control:focus {
+  border-color: #b80000;
+  box-shadow: 0 0 0 3px rgba(184, 0, 0, 0.12);
+}
+
+button[type="submit"] {
+  width: 100%;
+  padding: 10px;
+  font-weight: 600;
 }
 
 .custom-file-label::after {

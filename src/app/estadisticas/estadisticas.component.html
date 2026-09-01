@@ -1,119 +1,132 @@
-<!-- Gráfico de barras que muestra lo que más se ha perdido -->
-<h2>Lo que más se ha perdido</h2>
-<div id="lostChart">
-  <div class="bar" style="height: 70%;"></div>
-  <div class="bar" style="height: 52%;"></div>
-  <div class="bar" style="height: 90%;"></div>
-</div>
-<table>
-  <thead>
-    <tr>
-      <th>Artículo</th>
-      <th>Cantidad</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Teléfono móvil</td>
-      <td>120</td>
-    </tr>
-    <tr>
-      <td>Portátil</td>
-      <td>80</td>
-    </tr>
-    <tr>
-      <td>Billetera</td>
-      <td>200</td>
-    </tr>
-  </tbody>
-</table>
+<section class="stats-page">
+  <div class="page-container">
+    <h1 class="page-title">Estadísticas</h1>
+    <p class="page-subtitle">Resumen de actividad del sistema de objetos perdidos.</p>
 
-<!-- Gráfico de barras que muestra lo que más se ha recuperado -->
-<h2>Lo que más se ha recuperado</h2>
-<div id="recoveredChart">
-  <div class="bar" style="height: 50%;"></div>
-  <div class="bar" style="height: 30%;"></div>
-  <div class="bar" style="height: 80%;"></div>
-</div>
-<table>
-  <thead>
-    <tr>
-      <th>Artículo</th>
-      <th>Cantidad</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Teléfono móvil</td>
-      <td>80</td>
-    </tr>
-    <tr>
-      <td>Portátil</td>
-      <td>60</td>
-    </tr>
-    <tr>
-      <td>Billetera</td>
-      <td>150</td>
-    </tr>
-  </tbody>
-</table>
+    <div class="stats-grid">
+      <div class="stat-block">
+        <h2>Lo que más se ha perdido</h2>
+        <div id="lostChart" class="chart">
+          <div class="bar" style="height: 70%;" data-value="120"></div>
+          <div class="bar" style="height: 52%;" data-value="80"></div>
+          <div class="bar" style="height: 90%;" data-value="200"></div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Artículo</th>
+              <th>Cantidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Teléfono móvil</td>
+              <td>120</td>
+            </tr>
+            <tr>
+              <td>Portátil</td>
+              <td>80</td>
+            </tr>
+            <tr>
+              <td>Billetera</td>
+              <td>200</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-<!-- Gráfico de barras que muestra los objetos más consultados -->
-<h2>Objetos más consultados</h2>
-<div id="popularChart">
-  <div class="bar" style="height: 70%;"></div>
-  <div class="bar" style="height: 60%;"></div>
-  <div class="bar" style="height: 40%;"></div>
-</div>
-<table>
-  <thead>
-    <tr>
-      <th>Artículo</th>
-      <th>Cantidad</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Teléfono móvil</td>
-      <td>400</td>
-    </tr>
-    <tr>
-      <td>Portátil</td>
-      <td>350</td>
-    </tr>
-    <tr>
-      <td>Billetera</td>
-      <td>250</td>
-    </tr>
-  </tbody>
-</table>
+      <div class="stat-block">
+        <h2>Lo que más se ha recuperado</h2>
+        <div id="recoveredChart" class="chart">
+          <div class="bar" style="height: 50%;" data-value="80"></div>
+          <div class="bar" style="height: 30%;" data-value="60"></div>
+          <div class="bar" style="height: 80%;" data-value="150"></div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Artículo</th>
+              <th>Cantidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Teléfono móvil</td>
+              <td>80</td>
+            </tr>
+            <tr>
+              <td>Portátil</td>
+              <td>60</td>
+            </tr>
+            <tr>
+              <td>Billetera</td>
+              <td>150</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
-<!-- Gráfico de barras que muestra los objetos recuperados -->
-<h2>Objetos recuperados</h2>
-<div id="recoveredItemsChart">
-  <div class="bar" style="height: 25%;"></div>
-  <div class="bar" style="height: 15%;"></div>
-  <div class="bar" style="height: 40%;"></div>
-</div>
-<table>
-  <thead>
-    <tr>
-      <th>Artículo</th>
-      <th>Cantidad</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Teléfono móvil</td>
-      <td>50</td>
-    </tr>
-    <tr>
-      <td>Portátil</td>
-      <td>30</td>
-    </tr>
-    <tr>
-      <td>Billetera</td>
-      <td>80</td>
-    </tr>
-  </tbody>
-</table>
+      <div class="stat-block">
+        <h2>Objetos más consultados</h2>
+        <div id="popularChart" class="chart">
+          <div class="bar" style="height: 70%;" data-value="400"></div>
+          <div class="bar" style="height: 60%;" data-value="350"></div>
+          <div class="bar" style="height: 40%;" data-value="250"></div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Artículo</th>
+              <th>Cantidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Teléfono móvil</td>
+              <td>400</td>
+            </tr>
+            <tr>
+              <td>Portátil</td>
+              <td>350</td>
+            </tr>
+            <tr>
+              <td>Billetera</td>
+              <td>250</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="stat-block">
+        <h2>Objetos recuperados</h2>
+        <div id="recoveredItemsChart" class="chart">
+          <div class="bar" style="height: 25%;" data-value="50"></div>
+          <div class="bar" style="height: 15%;" data-value="30"></div>
+          <div class="bar" style="height: 40%;" data-value="80"></div>
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Artículo</th>
+              <th>Cantidad</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Teléfono móvil</td>
+              <td>50</td>
+            </tr>
+            <tr>
+              <td>Portátil</td>
+              <td>30</td>
+            </tr>
+            <tr>
+              <td>Billetera</td>
+              <td>80</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,75 +1,44 @@
-body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
-  background-color: #f5f5f5;
+.actividad-page {
+  background-color: var(--bg-soft, #f5f6fa);
+  min-height: 60vh;
 }
 
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+.toolbar {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
-h1 {
-  font-size: 36px;
-  text-align: center;
-  margin-bottom: 30px;
+.toolbar select {
+  width: auto;
+  min-width: 200px;
 }
 
-table {
-  border-collapse: collapse;
-  width: 100%;
-  background-color: #fff;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+.table-card {
+  background: #fff;
+  border-radius: var(--radius, 12px);
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(20, 20, 30, 0.06));
   overflow: hidden;
 }
 
-thead {
-  background-color: #911b1b;
+.table-card table {
+  margin-bottom: 0;
+}
+
+.table-card thead {
+  background-color: var(--brand, #b80000);
   color: #fff;
 }
 
-th, td {
-  padding: 12px;
-  text-align: center;
-  border-bottom: 1px solid #dee2e6;
-}
-
-tbody tr:nth-of-type(even) {
-  background-color: #f6f8fa;
-}
-
-.btn {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: #fff;
-  border-radius: 4px;
-  text-decoration: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease-in-out;
-}
-
-.btn:hover {
-  background-color: #0056b3;
-}
-
-#btn-descargar {
-  background-color: #071f4d; /* Color de fondo */
+.table-card th {
   border: none;
-  color: white; /* Color del texto */
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 10px;
-  cursor: pointer;
+  font-weight: 600;
+  font-size: 13px;
 }
 
-#select-actividades {
-  margin: 10px;
-  padding: 5px;
-  font-size: 16px;
+.table-card td {
+  font-size: 14px;
+  vertical-align: middle;
 }

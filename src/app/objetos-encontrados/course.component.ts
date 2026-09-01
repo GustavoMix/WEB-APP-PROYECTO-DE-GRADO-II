@@ -39,11 +39,9 @@ export class CourseComponent implements OnInit {
   showDetails(item: any) {
     this.selectedItem = item;
     this.selectedItemInfo = { foundBy: item.foundBy, cellphone: item.cellphone };
-    document.getElementById("myModal").style.display = "block";
   }
 
   hideDetails() {
-    document.getElementById("myModal").style.display = "none";
     this.selectedItem = null;
     this.selectedItemInfo = null;
   }

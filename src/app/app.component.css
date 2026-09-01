@@ -1,36 +1,68 @@
-.navbar
-{
-    background-color: #ffffff;
-}
-.navbar-light .navbar-nav .nav-link
-{
-    color: #000000;
-    font-size: 16px;
+.navbar {
+  background-color: #ffffff;
+  box-shadow: 0 2px 12px rgba(20, 20, 30, 0.08);
+  padding: 0.9rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.navbar-light .navbar-nav .nav-link:hover
-{
-    text-decoration: underline;
-}
 .navbar-brand {
-  font-size: 20px; /* Cambiar el tamaño de fuente */
-  font-weight: bold; /* Hacer el texto en negrita */
-  color: #333; /* Cambiar el color del texto */
-  text-decoration: none; /* Eliminar el subrayado del enlace */
-  transition: all 0.2s ease-in-out; /* Agregar una transición suave */
+  font-size: 18px;
+  font-weight: 700;
+  color: #26262b;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 
-/* Cambiar el color del texto cuando el mouse está encima */
+.navbar-brand .brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #b80000, #7a0000);
+  color: #fff;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
 .navbar-brand:hover {
-  color: #cc0000;
+  color: #b80000;
 }
 
-/* Cambiar el color del texto cuando se hace clic en el enlace */
-.navbar-brand:active {
-  color: #ff0000;
+.navbar-light .navbar-nav .nav-link {
+  color: #4a4a52;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
 }
 
-/* Cambiar el margen derecho para separar el enlace del borde derecho */
-.navbar-brand {
-  margin-right: 20px;
+.navbar-light .navbar-nav .nav-link:hover {
+  color: #b80000;
+  background-color: #fdeeee;
+  text-decoration: none;
+}
+
+.navbar-light .navbar-nav .nav-item.active .nav-link {
+  color: #b80000;
+  font-weight: 600;
+}
+
+.navbar-toggler {
+  border-radius: 8px;
+}
+
+footer {
+  background-color: #fafafa;
+  border-top: 1px solid #eee;
+  padding: 20px 0;
+  color: #8a8a92;
+  font-size: 14px;
 }

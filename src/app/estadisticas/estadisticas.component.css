@@ -1,63 +1,88 @@
-/* Estilos para los gráficos de barras */
-#lostChart, #recoveredChart, #popularChart, #recoveredItemsChart {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end; /* alinea las barras en la parte inferior del contenedor */
-    height: 100px;
-    width: 300px;
-    border: 1px solid #ddd;
-    margin-bottom: 20px;
-  }
-  
-  .bar {
-    position: relative; /* permite agregar texto dentro de las barras */
-    width: 30%;
-    background-color: #007bff;
-    transition: all .3s ease;
-    box-shadow: 0 2px 4px rgba(0,0,0,.25); /* añade una sombra suave a las barras */
-  }
-  
-  .bar::before { /* agrega el valor numérico dentro de cada barra */
-    content: attr(data-value);
-    position: absolute;
-    top: -20px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 14px;
-    color: #555;
-  }
-  
-  #lostChart .bar {
-    background-color: #f44336; /* cambia el color de las barras en el primer gráfico */
-  }
-  
-  #recoveredChart .bar {
-    background-color: #4caf50; /* cambia el color de las barras en el segundo gráfico */
-  }
-  
-  #popularChart .bar {
-    background-color: #ff9800; /* cambia el color de las barras en el tercer gráfico */
-  }
-  
-  #recoveredItemsChart .bar {
-    background-color: #9c27b0; /* cambia el color de las barras en el cuarto gráfico */
-  }
-  
-  /* Estilos para las tablas */
-  table {
-    border-collapse: collapse;
-    margin-top: 10px;
-    width: 300px;
-  }
-  
-  th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-    font-size: 14px;
-  }
-  
-  th {
-    background-color: #f2f2f2;
-  }
-  
+.stats-page {
+  background-color: var(--bg-soft, #f5f6fa);
+  min-height: 60vh;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.stat-block {
+  background: #fff;
+  border-radius: var(--radius, 12px);
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(20, 20, 30, 0.06));
+  padding: 24px;
+}
+
+.stat-block h2 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink, #26262b);
+  margin-bottom: 20px;
+}
+
+.chart {
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-end;
+  height: 140px;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 20px;
+  padding: 0 10px;
+}
+
+.bar {
+  position: relative;
+  width: 22%;
+  border-radius: 6px 6px 0 0;
+  background-color: #007bff;
+  transition: all .3s ease;
+}
+
+.bar::before {
+  content: attr(data-value);
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: 600;
+  color: #6c757d;
+}
+
+#lostChart .bar {
+  background-color: #f44336;
+}
+
+#recoveredChart .bar {
+  background-color: #4caf50;
+}
+
+#popularChart .bar {
+  background-color: #ff9800;
+}
+
+#recoveredItemsChart .bar {
+  background-color: #9c27b0;
+}
+
+/* Estilos para las tablas */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th, td {
+  border-bottom: 1px solid #eee;
+  padding: 8px 4px;
+  text-align: left;
+  font-size: 13px;
+}
+
+th {
+  color: var(--muted, #6c757d);
+  font-weight: 600;
+}
