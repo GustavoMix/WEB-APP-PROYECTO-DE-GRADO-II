@@ -24,12 +24,14 @@ export class CourseComponent implements OnInit {
 
   get filteredItems() {
     const normalizedSearchTerm = this.normalizeString(this.searchTerm);
-    return this.items.filter(item => {
-      const normalizedItemName = this.normalizeString(item.name);
-      const normalizedItemDescription = this.normalizeString(item.description);
-      const isMatch = normalizedItemName.includes(normalizedSearchTerm) || normalizedItemDescription.includes(normalizedSearchTerm);
-      return this.selectedCategory ? item.category === this.selectedCategory && isMatch : isMatch;
-    });
+    return this.items
+      .filter(item => {
+        const normalizedItemName = this.normalizeString(item.name);
+        const normalizedItemDescription = this.normalizeString(item.description);
+        const isMatch = normalizedItemName.includes(normalizedSearchTerm) || normalizedItemDescription.includes(normalizedSearchTerm);
+        return this.selectedCategory ? item.category === this.selectedCategory && isMatch : isMatch;
+      })
+      .sort((a, b) => (a.estado === 'recuperado' ? 1 : 0) - (b.estado === 'recuperado' ? 1 : 0));
   }
 
   setCategory(category: string) {
@@ -44,6 +46,11 @@ export class CourseComponent implements OnInit {
   hideDetails() {
     this.selectedItem = null;
     this.selectedItemInfo = null;
+  }
+
+  marcarRecuperado(item: Objeto) {
+    this.objetosService.marcarRecuperado(item.id);
+    item.estado = 'recuperado';
   }
 
   normalizeString(str: string) {

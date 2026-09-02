@@ -1,4 +1,5 @@
 export type TipoObjeto = 'perdido' | 'encontrado';
+export type EstadoObjeto = 'activo' | 'recuperado';
 
 export interface Objeto {
   id: number;
@@ -7,6 +8,7 @@ export interface Objeto {
   category: string;
   tipo: TipoObjeto;
   image: string;
+  estado?: EstadoObjeto;
   location?: string;
   date?: string;
   foundBy?: string;

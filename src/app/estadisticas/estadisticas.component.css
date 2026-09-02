@@ -3,9 +3,40 @@
   min-height: 60vh;
 }
 
+.summary-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.summary-card {
+  background: #fff;
+  border-radius: var(--radius, 12px);
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(20, 20, 30, 0.06));
+  padding: 20px;
+  text-align: center;
+}
+
+.summary-card strong {
+  display: block;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--ink, #26262b);
+}
+
+.summary-card span {
+  font-size: 12px;
+  color: var(--muted, #6c757d);
+}
+
+.summary-card.recuperado strong {
+  color: #2e9e5b;
+}
+
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
 }
 
@@ -23,66 +54,52 @@
   margin-bottom: 20px;
 }
 
-.chart {
-  display: flex;
-  justify-content: space-around;
-  align-items: flex-end;
-  height: 140px;
-  width: 100%;
-  border-bottom: 1px solid #eee;
-  margin-bottom: 20px;
-  padding: 0 10px;
-}
-
-.bar {
-  position: relative;
-  width: 22%;
-  border-radius: 6px 6px 0 0;
-  background-color: #007bff;
-  transition: all .3s ease;
-}
-
-.bar::before {
-  content: attr(data-value);
-  position: absolute;
-  top: -22px;
-  left: 50%;
-  transform: translateX(-50%);
-  font-size: 12px;
-  font-weight: 600;
-  color: #6c757d;
-}
-
-#lostChart .bar {
-  background-color: #f44336;
-}
-
-#recoveredChart .bar {
-  background-color: #4caf50;
-}
-
-#popularChart .bar {
-  background-color: #ff9800;
-}
-
-#recoveredItemsChart .bar {
-  background-color: #9c27b0;
-}
-
-/* Estilos para las tablas */
-table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th, td {
-  border-bottom: 1px solid #eee;
-  padding: 8px 4px;
-  text-align: left;
+.hbar-row {
+  display: grid;
+  grid-template-columns: 100px 1fr 30px;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
   font-size: 13px;
 }
 
-th {
+.hbar-label {
   color: var(--muted, #6c757d);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hbar-track {
+  background: #f0f0f4;
+  border-radius: 999px;
+  height: 10px;
+  overflow: hidden;
+}
+
+.hbar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.hbar-fill.perdido {
+  background: linear-gradient(90deg, #ff8a8a, #b80000);
+}
+
+.hbar-fill.encontrado {
+  background: linear-gradient(90deg, #7fd99a, #2e9e5b);
+}
+
+.hbar-value {
+  text-align: right;
   font-weight: 600;
+  color: var(--ink, #26262b);
+}
+
+.sin-datos {
+  color: var(--muted, #6c757d);
+  font-size: 14px;
+  margin-bottom: 0;
 }

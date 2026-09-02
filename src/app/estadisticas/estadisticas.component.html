@@ -1,131 +1,50 @@
 <section class="stats-page">
   <div class="page-container">
     <h1 class="page-title">Estadísticas</h1>
-    <p class="page-subtitle">Resumen de actividad del sistema de objetos perdidos.</p>
+    <p class="page-subtitle">Datos reales del sistema, calculados a partir de lo registrado.</p>
+
+    <div class="summary-row">
+      <div class="summary-card">
+        <strong>{{resumen.total}}</strong>
+        <span>Objetos registrados</span>
+      </div>
+      <div class="summary-card">
+        <strong>{{resumen.perdidos}}</strong>
+        <span>Extraviados</span>
+      </div>
+      <div class="summary-card">
+        <strong>{{resumen.encontrados}}</strong>
+        <span>Encontrados</span>
+      </div>
+      <div class="summary-card recuperado">
+        <strong>{{resumen.recuperados}}</strong>
+        <span>Recuperados ({{porcentajeRecuperados}}%)</span>
+      </div>
+    </div>
 
     <div class="stats-grid">
       <div class="stat-block">
-        <h2>Lo que más se ha perdido</h2>
-        <div id="lostChart" class="chart">
-          <div class="bar" style="height: 70%;" data-value="120"></div>
-          <div class="bar" style="height: 52%;" data-value="80"></div>
-          <div class="bar" style="height: 90%;" data-value="200"></div>
+        <h2>Categorías más extraviadas</h2>
+        <div *ngIf="porCategoriaPerdidos.length; else sinDatosPerdidos">
+          <div class="hbar-row" *ngFor="let b of porCategoriaPerdidos">
+            <span class="hbar-label">{{b.categoria}}</span>
+            <div class="hbar-track"><div class="hbar-fill perdido" [style.width.%]="b.porcentaje"></div></div>
+            <span class="hbar-value">{{b.cantidad}}</span>
+          </div>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Artículo</th>
-              <th>Cantidad</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Teléfono móvil</td>
-              <td>120</td>
-            </tr>
-            <tr>
-              <td>Portátil</td>
-              <td>80</td>
-            </tr>
-            <tr>
-              <td>Billetera</td>
-              <td>200</td>
-            </tr>
-          </tbody>
-        </table>
+        <ng-template #sinDatosPerdidos><p class="sin-datos">Aún no hay objetos extraviados registrados.</p></ng-template>
       </div>
 
       <div class="stat-block">
-        <h2>Lo que más se ha recuperado</h2>
-        <div id="recoveredChart" class="chart">
-          <div class="bar" style="height: 50%;" data-value="80"></div>
-          <div class="bar" style="height: 30%;" data-value="60"></div>
-          <div class="bar" style="height: 80%;" data-value="150"></div>
+        <h2>Categorías más encontradas</h2>
+        <div *ngIf="porCategoriaEncontrados.length; else sinDatosEncontrados">
+          <div class="hbar-row" *ngFor="let b of porCategoriaEncontrados">
+            <span class="hbar-label">{{b.categoria}}</span>
+            <div class="hbar-track"><div class="hbar-fill encontrado" [style.width.%]="b.porcentaje"></div></div>
+            <span class="hbar-value">{{b.cantidad}}</span>
+          </div>
         </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Artículo</th>
-              <th>Cantidad</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Teléfono móvil</td>
-              <td>80</td>
-            </tr>
-            <tr>
-              <td>Portátil</td>
-              <td>60</td>
-            </tr>
-            <tr>
-              <td>Billetera</td>
-              <td>150</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="stat-block">
-        <h2>Objetos más consultados</h2>
-        <div id="popularChart" class="chart">
-          <div class="bar" style="height: 70%;" data-value="400"></div>
-          <div class="bar" style="height: 60%;" data-value="350"></div>
-          <div class="bar" style="height: 40%;" data-value="250"></div>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Artículo</th>
-              <th>Cantidad</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Teléfono móvil</td>
-              <td>400</td>
-            </tr>
-            <tr>
-              <td>Portátil</td>
-              <td>350</td>
-            </tr>
-            <tr>
-              <td>Billetera</td>
-              <td>250</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="stat-block">
-        <h2>Objetos recuperados</h2>
-        <div id="recoveredItemsChart" class="chart">
-          <div class="bar" style="height: 25%;" data-value="50"></div>
-          <div class="bar" style="height: 15%;" data-value="30"></div>
-          <div class="bar" style="height: 40%;" data-value="80"></div>
-        </div>
-        <table>
-          <thead>
-            <tr>
-              <th>Artículo</th>
-              <th>Cantidad</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Teléfono móvil</td>
-              <td>50</td>
-            </tr>
-            <tr>
-              <td>Portátil</td>
-              <td>30</td>
-            </tr>
-            <tr>
-              <td>Billetera</td>
-              <td>80</td>
-            </tr>
-          </tbody>
-        </table>
+        <ng-template #sinDatosEncontrados><p class="sin-datos">Aún no hay objetos encontrados registrados.</p></ng-template>
       </div>
     </div>
   </div>

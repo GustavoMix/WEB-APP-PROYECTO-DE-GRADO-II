@@ -81,6 +81,24 @@
   font-weight: 600;
 }
 
+.navbar-nav .nav-link-ia i {
+  color: #7c5cd6;
+}
+
+.navbar-nav .nav-link-ia:hover {
+  color: #7c5cd6;
+  background-color: #f3f0fd;
+}
+
+.navbar-nav .nav-item.active .nav-link-ia {
+  color: #7c5cd6;
+  background-color: #f3f0fd;
+}
+
+.navbar-nav .nav-item.active .nav-link-ia i {
+  color: #7c5cd6;
+}
+
 .navbar-toggler {
   border-radius: 8px;
   border-color: #eee;

@@ -100,14 +100,30 @@
 }
 
 .hero-ia {
-  margin-top: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 24px;
   font-size: 13px;
-  color: #f7dede;
-  opacity: 0.9;
+  font-weight: 600;
+  color: #fff;
+  background: rgba(124, 92, 214, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  padding: 8px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.15s ease;
 }
 
-.hero-ia i {
-  margin-right: 6px;
+.hero-ia:hover {
+  background: rgba(124, 92, 214, 0.55);
+  color: #fff;
+  text-decoration: none;
+  transform: translateY(-1px);
+}
+
+.hero-ia .fa-arrow-right {
+  font-size: 11px;
 }
 
 /* Cómo funciona */
@@ -202,6 +218,19 @@
   font-size: 22px;
   color: #b80000;
   flex-shrink: 0;
+}
+
+.quick-link-ia {
+  border-color: #e6dfff;
+  background: #faf9ff;
+}
+
+.quick-link-ia i {
+  color: #7c5cd6;
+}
+
+.quick-link-ia:hover {
+  border-color: #7c5cd6;
 }
 
 .quick-link strong {

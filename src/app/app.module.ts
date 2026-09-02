@@ -12,6 +12,7 @@ import { RegistroObjetosComponent } from './registro-objetos/registro-objetos.co
 import { ObjetosExtraviadosComponent } from './objetos-extraviados/objetos-extraviados.component';
 import { RegistroActividadComponent } from './registro-actividad/registro-actividad.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { BuscarFotoComponent } from './buscar-foto/buscar-foto.component';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
     ObjetosExtraviadosComponent,
     RegistroActividadComponent,
     EstadisticasComponent,
+    BuscarFotoComponent,
   ],
   imports: [
     BrowserModule,

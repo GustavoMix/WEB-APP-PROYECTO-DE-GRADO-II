@@ -42,3 +42,12 @@
   font-size: 14px;
   vertical-align: middle;
 }
+
+.empty-card {
+  background: #fff;
+  border-radius: var(--radius, 12px);
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(20, 20, 30, 0.06));
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--muted, #6c757d);
+}

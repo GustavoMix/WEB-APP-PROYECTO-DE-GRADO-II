@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Coincidencia, Objeto, TipoObjeto } from '../models/objeto.model';
 import { similitudCoseno } from './ml.service';
+import { ActividadService } from './actividad.service';
 
 export const CATEGORIAS = [
   'CUADERNOS',
@@ -56,7 +57,7 @@ export class ObjetosService {
 
   private objetos: Objeto[];
 
-  constructor() {
+  constructor(private actividadService: ActividadService) {
     const stored = localStorage.getItem(STORAGE_KEY);
     this.objetos = stored ? JSON.parse(stored) : SEED;
     if (!stored) {
@@ -68,17 +69,66 @@ export class ObjetosService {
     return this.objetos.filter(o => o.tipo === tipo);
   }
 
-  getResumen(): { total: number; perdidos: number; encontrados: number } {
+  getTodos(): Objeto[] {
+    return this.objetos.filter(o => o.image);
+  }
+
+  getResumen(): { total: number; perdidos: number; encontrados: number; recuperados: number } {
     const perdidos = this.getPorTipo('perdido').length;
     const encontrados = this.getPorTipo('encontrado').length;
-    return { total: perdidos + encontrados, perdidos, encontrados };
+    const recuperados = this.objetos.filter(o => o.estado === 'recuperado').length;
+    return { total: perdidos + encontrados, perdidos, encontrados, recuperados };
+  }
+
+  /** Cantidad de objetos por categoría, de mayor a menor. */
+  getConteoPorCategoria(tipo: TipoObjeto): { categoria: string; cantidad: number }[] {
+    const conteo: { [categoria: string]: number } = {};
+    this.getPorTipo(tipo).forEach(o => {
+      conteo[o.category] = (conteo[o.category] || 0) + 1;
+    });
+
+    return Object.keys(conteo)
+      .map(categoria => ({ categoria, cantidad: conteo[categoria] }))
+      .sort((a, b) => b.cantidad - a.cantidad);
   }
 
   agregar(objeto: Omit<Objeto, 'id'>): Objeto {
-    const nuevo: Objeto = { ...objeto, id: this.nextId() };
+    const nuevo: Objeto = { ...objeto, id: this.nextId(), estado: 'activo' };
     this.objetos.push(nuevo);
     this.persist();
+
+    this.actividadService.registrar(
+      objeto.tipo === 'perdido' ? 'Objeto extraviado registrado' : 'Objeto encontrado registrado',
+      `${objeto.name} · ${objeto.category}`
+    );
+
     return nuevo;
+  }
+
+  marcarRecuperado(id: number): void {
+    const objeto = this.objetos.find(o => o.id === id);
+    if (!objeto || objeto.estado === 'recuperado') {
+      return;
+    }
+
+    objeto.estado = 'recuperado';
+    this.persist();
+    this.actividadService.registrar('Objeto recuperado', `${objeto.name} · ${objeto.category}`);
+  }
+
+  /** Busca coincidencias en toda la base (perdidos y encontrados), sin filtrar por tipo. */
+  buscarSimilaresGlobal(vector: number[], limite = 8): Coincidencia[] {
+    const candidatos = this.objetos.filter(o => o.image && o.featureVector && o.featureVector.length);
+
+    return candidatos
+      .map(objeto => ({
+        objeto,
+        score: similitudCoseno(vector, objeto.featureVector),
+        porImagen: true
+      }))
+      .filter(c => c.score > 0.3)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limite);
   }
 
   /**
