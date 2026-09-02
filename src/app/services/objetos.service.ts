@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Objeto, TipoObjeto } from '../models/objeto.model';
+import { Coincidencia, Objeto, TipoObjeto } from '../models/objeto.model';
+import { similitudCoseno } from './ml.service';
 
 export const CATEGORIAS = [
   'CUADERNOS',
@@ -78,6 +79,44 @@ export class ObjetosService {
     this.objetos.push(nuevo);
     this.persist();
     return nuevo;
+  }
+
+  /**
+   * Busca los objetos más parecidos a una imagen recién subida.
+   *
+   * Si el objeto guardado tiene vector de características se compara imagen
+   * contra imagen (similitud del coseno). Los objetos de ejemplo no lo
+   * tienen, así que para esos se usa una heurística por categoría y nombre,
+   * que sirve de respaldo pero se marca como tal.
+   */
+  buscarSimilares(
+    vector: number[],
+    categoria: string,
+    tipo: TipoObjeto,
+    limite = 4
+  ): Coincidencia[] {
+    const candidatos = this.objetos.filter(o => o.tipo === tipo && o.image);
+
+    const coincidencias: Coincidencia[] = candidatos.map(objeto => {
+      if (vector && vector.length && objeto.featureVector && objeto.featureVector.length) {
+        return {
+          objeto,
+          score: similitudCoseno(vector, objeto.featureVector),
+          porImagen: true
+        };
+      }
+
+      return {
+        objeto,
+        score: categoria && objeto.category === categoria ? 0.55 : 0.1,
+        porImagen: false
+      };
+    });
+
+    return coincidencias
+      .filter(c => c.score > 0.3)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, limite);
   }
 
   private nextId(): number {

@@ -12,7 +12,7 @@
           </div>
           <div class="col-md-6 mb-3">
             <label for="tipo">¿Perdido o encontrado?</label>
-            <select id="tipo" name="tipo" class="form-control" required [(ngModel)]="itemTipo">
+            <select id="tipo" name="tipo" class="form-control" required [(ngModel)]="itemTipo" (ngModelChange)="onTipoChange()">
               <option value="">--Seleccione una opción--</option>
               <option value="perdido">Perdido</option>
               <option value="encontrado">Encontrado</option>
@@ -73,6 +73,23 @@
             <div *ngIf="errorAnalisis" class="ia-box error">
               <i class="fas fa-exclamation-triangle"></i>
               <span>{{ errorAnalisis }}</span>
+            </div>
+
+            <div *ngIf="coincidencias.length" class="coincidencias">
+              <div class="coincidencias-header">
+                <i class="fas fa-clone"></i>
+                Posibles coincidencias entre los objetos {{ tipoContrarioTexto }}
+              </div>
+              <div class="coincidencia" *ngFor="let c of coincidencias">
+                <img [src]="c.objeto.image" alt="{{c.objeto.name}}">
+                <div class="coincidencia-info">
+                  <strong>{{ c.objeto.name }}</strong>
+                  <small>{{ c.objeto.category }}</small>
+                  <span class="match-score" [class.por-imagen]="c.porImagen">
+                    {{ porcentaje(c.score) }}% {{ c.porImagen ? 'de parecido visual' : 'por categoría' }}
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

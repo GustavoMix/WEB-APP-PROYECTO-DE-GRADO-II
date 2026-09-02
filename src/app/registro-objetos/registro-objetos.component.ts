@@ -1,8 +1,8 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import * as ml5 from 'ml5';
 import { ObjetosService, CATEGORIAS } from '../services/objetos.service';
-import { TipoObjeto } from '../models/objeto.model';
+import { MlService } from '../services/ml.service';
+import { Coincidencia, TipoObjeto } from '../models/objeto.model';
 import { Deteccion, interpretarPrediccion } from '../models/clasificacion';
 
 @Component({
@@ -22,12 +22,16 @@ export class RegistroObjetosComponent implements OnInit {
   itemDate = '';
   selectedFile: File = null;
   selectedFileUrl: any = null;
+
   deteccion: Deteccion = null;
   analizando = false;
   errorAnalisis = '';
+  featureVector: number[] = null;
+  coincidencias: Coincidencia[] = [];
 
   constructor(
     private objetosService: ObjetosService,
+    private mlService: MlService,
     private router: Router,
     private zone: NgZone
   ) { }
@@ -45,7 +49,8 @@ export class RegistroObjetosComponent implements OnInit {
       date: this.itemDate,
       image: this.selectedFileUrl || '',
       predictionLabel: this.deteccion ? this.deteccion.nombre : undefined,
-      predictionConfidence: this.deteccion ? this.deteccion.confianza : undefined
+      predictionConfidence: this.deteccion ? this.deteccion.confianza : undefined,
+      featureVector: this.featureVector || undefined
     });
 
     const destino = this.itemTipo === 'perdido' ? '/perdidos' : '/course';
@@ -54,6 +59,8 @@ export class RegistroObjetosComponent implements OnInit {
     this.selectedFile = null;
     this.selectedFileUrl = null;
     this.deteccion = null;
+    this.featureVector = null;
+    this.coincidencias = [];
     this.errorAnalisis = '';
 
     this.router.navigate([destino]);
@@ -66,6 +73,8 @@ export class RegistroObjetosComponent implements OnInit {
     }
 
     this.deteccion = null;
+    this.featureVector = null;
+    this.coincidencias = [];
     this.errorAnalisis = '';
 
     const reader = new FileReader();
@@ -76,47 +85,84 @@ export class RegistroObjetosComponent implements OnInit {
     };
   }
 
+  /** Al cambiar perdido/encontrado se recalcula contra la lista contraria. */
+  onTipoChange() {
+    this.buscarCoincidencias();
+  }
+
   /**
-   * Clasifica la imagen con MobileNet (ml5) y traduce el resultado a una
-   * categoría del sistema. Los callbacks de ml5 corren fuera de la zona de
-   * Angular, por eso las actualizaciones se hacen dentro de zone.run().
+   * Analiza la imagen con MobileNet: primero identifica qué objeto es y
+   * luego extrae su vector de características para poder compararla con
+   * las fotos ya registradas.
+   *
+   * Los callbacks del modelo corren fuera de la zona de Angular, por eso
+   * las actualizaciones de estado se hacen dentro de zone.run().
    */
   private async analizarImagen(dataUrl: string) {
     this.analizando = true;
 
     try {
-      const imageModel = await ml5.imageClassifier('MobileNet');
+      const img = await this.mlService.cargarImagen(dataUrl);
+      const resultado = await this.mlService.clasificar(img);
 
-      const img = new Image();
-      img.src = dataUrl;
-      await new Promise((resolve) => (img.onload = resolve));
+      this.zone.run(() => {
+        this.deteccion = interpretarPrediccion(resultado.label, resultado.confidence);
+        if (!this.itemCategory && this.deteccion.categoria) {
+          this.itemCategory = this.deteccion.categoria;
+        }
+      });
 
-      imageModel.classify(img, (err, results) => {
+      // La extracción del vector es opcional: si falla, la app sigue
+      // funcionando con la clasificación y la coincidencia por categoría.
+      try {
+        const vector = await this.mlService.extraerVector(img);
         this.zone.run(() => {
-          this.analizando = false;
-
-          if (err || !results || !results.length) {
-            this.errorAnalisis = 'No se pudo analizar la imagen.';
-            return;
-          }
-
-          this.deteccion = interpretarPrediccion(results[0].label, results[0].confidence);
-
-          // Sugiere la categoría detectada solo si el usuario no eligió una.
-          if (!this.itemCategory && this.deteccion.categoria) {
-            this.itemCategory = this.deteccion.categoria;
-          }
+          this.featureVector = vector;
         });
+      } catch (e) {
+        console.warn('No se pudo extraer el vector de características', e);
+      }
+
+      this.zone.run(() => {
+        this.analizando = false;
+        this.buscarCoincidencias();
       });
     } catch (e) {
       this.zone.run(() => {
         this.analizando = false;
-        this.errorAnalisis = 'No se pudo cargar el modelo de reconocimiento.';
+        this.errorAnalisis = 'No se pudo analizar la imagen. Revisa tu conexión e inténtalo de nuevo.';
       });
     }
   }
 
+  /**
+   * Si registro algo perdido, las coincidencias útiles están entre lo
+   * encontrado, y viceversa.
+   */
+  private buscarCoincidencias() {
+    if (!this.deteccion && !this.featureVector) {
+      this.coincidencias = [];
+      return;
+    }
+
+    const tipoContrario: TipoObjeto = this.itemTipo === 'perdido' ? 'encontrado' : 'perdido';
+
+    this.coincidencias = this.objetosService.buscarSimilares(
+      this.featureVector,
+      this.itemCategory,
+      tipoContrario
+    );
+  }
+
+  get tipoContrarioTexto(): string {
+    return this.itemTipo === 'perdido' ? 'encontrados' : 'extraviados';
+  }
+
   get confianzaPorcentaje(): number {
     return this.deteccion ? Math.round(this.deteccion.confianza * 100) : 0;
+  }
+
+  porcentaje(score: number): number {
+    return Math.round(score * 100);
   }
 }
