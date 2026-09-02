@@ -2,6 +2,8 @@ import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ObjetosService, CATEGORIAS } from '../services/objetos.service';
 import { MlService } from '../services/ml.service';
+import { AuthService } from '../services/auth.service';
+import { comprimirImagen } from '../services/imagen.util';
 import { Coincidencia, TipoObjeto } from '../models/objeto.model';
 import { Deteccion, interpretarPrediccion } from '../models/clasificacion';
 
@@ -20,38 +22,58 @@ export class RegistroObjetosComponent implements OnInit {
   itemTipo: TipoObjeto | '' = '';
   itemLocation = '';
   itemDate = '';
+  contactoNombre = '';
+  contactoTelefono = '';
   selectedFile: File = null;
   selectedFileUrl: any = null;
 
   deteccion: Deteccion = null;
   analizando = false;
   errorAnalisis = '';
+  errorGuardado = '';
   featureVector: number[] = null;
   coincidencias: Coincidencia[] = [];
 
   constructor(
     private objetosService: ObjetosService,
     private mlService: MlService,
+    private authService: AuthService,
     private router: Router,
     private zone: NgZone
   ) { }
 
   ngOnInit(): void {
+    // Si hay sesión iniciada, se precargan los datos de contacto.
+    const usuario = this.authService.usuarioActual;
+    if (usuario) {
+      this.contactoNombre = `${usuario.nombre} ${usuario.apellido}`.trim();
+      this.contactoTelefono = usuario.telefono;
+    }
   }
 
   onSubmit(form) {
-    this.objetosService.agregar({
-      name: this.itemName,
-      description: this.itemDescription,
-      category: this.itemCategory,
-      tipo: this.itemTipo as TipoObjeto,
-      location: this.itemLocation,
-      date: this.itemDate,
-      image: this.selectedFileUrl || '',
-      predictionLabel: this.deteccion ? this.deteccion.nombre : undefined,
-      predictionConfidence: this.deteccion ? this.deteccion.confianza : undefined,
-      featureVector: this.featureVector || undefined
-    });
+    this.errorGuardado = '';
+
+    try {
+      this.objetosService.agregar({
+        name: this.itemName,
+        description: this.itemDescription,
+        category: this.itemCategory,
+        tipo: this.itemTipo as TipoObjeto,
+        location: this.itemLocation,
+        date: this.itemDate,
+        image: this.selectedFileUrl || '',
+        foundBy: this.contactoNombre || undefined,
+        cellphone: this.contactoTelefono || undefined,
+        predictionLabel: this.deteccion ? this.deteccion.nombre : undefined,
+        predictionConfidence: this.deteccion ? this.deteccion.confianza : undefined,
+        featureVector: this.featureVector || undefined
+      });
+    } catch (e) {
+      this.errorGuardado = 'No hay espacio suficiente en el navegador para guardar más objetos con foto. ' +
+        'Elimina algunos objetos registrados antes de continuar.';
+      return;
+    }
 
     const destino = this.itemTipo === 'perdido' ? '/perdidos' : '/course';
 
@@ -76,12 +98,20 @@ export class RegistroObjetosComponent implements OnInit {
     this.featureVector = null;
     this.coincidencias = [];
     this.errorAnalisis = '';
+    this.errorGuardado = '';
 
     const reader = new FileReader();
     reader.readAsDataURL(this.selectedFile);
-    reader.onload = () => {
-      this.selectedFileUrl = reader.result as string;
-      this.analizarImagen(this.selectedFileUrl);
+    reader.onload = async () => {
+      // Se comprime antes de mostrarla y guardarla: la foto original de un
+      // celular no cabe en localStorage.
+      const comprimida = await comprimirImagen(reader.result as string);
+
+      this.zone.run(() => {
+        this.selectedFileUrl = comprimida;
+      });
+
+      this.analizarImagen(comprimida);
     };
   }
 
@@ -99,7 +129,7 @@ export class RegistroObjetosComponent implements OnInit {
    * las actualizaciones de estado se hacen dentro de zone.run().
    */
   private async analizarImagen(dataUrl: string) {
-    this.analizando = true;
+    this.zone.run(() => this.analizando = true);
 
     try {
       const img = await this.mlService.cargarImagen(dataUrl);

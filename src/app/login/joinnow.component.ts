@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService, Usuario } from '../services/auth.service';
 
 @Component({
   selector: 'app-joinnow',
@@ -6,11 +8,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./joinnow.component.css']
 })
 export class JoinnowComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
 
   isLoginActive = true;
   isRegisterActive = false;
@@ -29,12 +26,22 @@ export class JoinnowComponent implements OnInit {
   registerPhoneNumber = '';
   registerAddress = '';
 
+  error = '';
+  usuario: Usuario = null;
+
+  constructor(private authService: AuthService, private router: Router) { }
+
+  ngOnInit(): void {
+    this.usuario = this.authService.usuarioActual;
+  }
+
   showLoginForm() {
     this.isLoginActive = true;
     this.isRegisterActive = false;
 
     this.isLoginFormVisible = true;
     this.isRegisterFormVisible = false;
+    this.error = '';
   }
 
   showRegisterForm() {
@@ -43,23 +50,48 @@ export class JoinnowComponent implements OnInit {
 
     this.isLoginFormVisible = false;
     this.isRegisterFormVisible = true;
+    this.error = '';
   }
 
   onLogin() {
-    // Aquí puedes agregar tu lógica para iniciar sesión
-    console.log('Iniciando sesión con correo electrónico:', this.loginEmail);
-    console.log('Contraseña:', this.loginPassword);
+    const resultado = this.authService.login(this.loginEmail, this.loginPassword);
+
+    if (!resultado.ok) {
+      this.error = resultado.error;
+      return;
+    }
+
+    this.error = '';
+    this.usuario = this.authService.usuarioActual;
+    this.router.navigate(['/registro']);
   }
 
   onRegister() {
-    // Aquí puedes agregar tu lógica para registrar un nuevo usuario
-    console.log('Registrando nuevo usuario con correo electrónico:', this.registerEmail);
-    console.log('Nombre:', this.registerFirstName);
-    console.log('Apellido:', this.registerLastName);
-    console.log('Contraseña:', this.registerPassword);
-    console.log('Teléfono:', this.registerPhoneNumber);
-    console.log('Dirección:', this.registerAddress);
+    if (this.registerPassword !== this.registerConfirmPassword) {
+      this.error = 'Las contraseñas no coinciden.';
+      return;
+    }
+
+    const resultado = this.authService.registrar({
+      nombre: this.registerFirstName,
+      apellido: this.registerLastName,
+      email: this.registerEmail,
+      telefono: this.registerPhoneNumber,
+      direccion: this.registerAddress
+    }, this.registerPassword);
+
+    if (!resultado.ok) {
+      this.error = resultado.error;
+      return;
+    }
+
+    this.error = '';
+    this.usuario = this.authService.usuarioActual;
+    this.router.navigate(['/registro']);
   }
 
-
+  cerrarSesion() {
+    this.authService.logout();
+    this.usuario = null;
+  }
 }

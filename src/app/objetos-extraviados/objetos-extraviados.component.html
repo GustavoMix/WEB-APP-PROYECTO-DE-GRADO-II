@@ -44,8 +44,13 @@
       <h3>{{selectedItem.name}}</h3>
       <span class="category-badge static">{{selectedItem.category}}</span>
       <p>{{selectedItem.description}}</p>
-      <p *ngIf="selectedItemInfo?.foundBy">Reportado por: {{selectedItemInfo.foundBy}}</p>
-      <p *ngIf="selectedItemInfo?.cellphone">Contacto: {{selectedItemInfo.cellphone}}</p>
+      <div class="contacto-box" *ngIf="selectedItemInfo?.foundBy || selectedItemInfo?.cellphone">
+        <strong>Contacto</strong>
+        <div *ngIf="selectedItemInfo.foundBy"><i class="fas fa-user"></i> {{selectedItemInfo.foundBy}}</div>
+        <div *ngIf="selectedItemInfo.cellphone">
+          <i class="fas fa-phone"></i> <a href="tel:{{selectedItemInfo.cellphone}}">{{selectedItemInfo.cellphone}}</a>
+        </div>
+      </div>
 
       <div class="recuperado-accion" *ngIf="selectedItem.estado !== 'recuperado'; else yaRecuperado">
         <button class="btn btn-success btn-block" (click)="marcarRecuperado(selectedItem)">
@@ -55,6 +60,17 @@
       <ng-template #yaRecuperado>
         <div class="ya-recuperado"><i class="fas fa-check-circle"></i> Este objeto ya fue recuperado</div>
       </ng-template>
+
+      <button class="btn btn-link btn-eliminar" *ngIf="!confirmandoEliminar" (click)="pedirConfirmacion()">
+        <i class="fas fa-trash"></i> Eliminar este registro
+      </button>
+      <div class="confirmar-eliminar" *ngIf="confirmandoEliminar">
+        <span>¿Seguro que quieres eliminarlo? No se puede deshacer.</span>
+        <div>
+          <button class="btn btn-sm btn-danger" (click)="eliminar(selectedItem)">Sí, eliminar</button>
+          <button class="btn btn-sm btn-outline-secondary" (click)="cancelarEliminar()">Cancelar</button>
+        </div>
+      </div>
     </div>
   </div>
 </section>

@@ -15,6 +15,7 @@ export class ObjetosExtraviadosComponent implements OnInit {
   selectedCategory = '';
   selectedItem: any = null;
   selectedItemInfo: any = null;
+  confirmandoEliminar = false;
 
   constructor(private objetosService: ObjetosService) { }
 
@@ -41,16 +42,32 @@ export class ObjetosExtraviadosComponent implements OnInit {
   showDetails(item: any) {
     this.selectedItem = item;
     this.selectedItemInfo = { foundBy: item.foundBy, cellphone: item.cellphone };
+    this.confirmandoEliminar = false;
   }
 
   hideDetails() {
     this.selectedItem = null;
     this.selectedItemInfo = null;
+    this.confirmandoEliminar = false;
   }
 
   marcarRecuperado(item: Objeto) {
     this.objetosService.marcarRecuperado(item.id);
     item.estado = 'recuperado';
+  }
+
+  pedirConfirmacion() {
+    this.confirmandoEliminar = true;
+  }
+
+  cancelarEliminar() {
+    this.confirmandoEliminar = false;
+  }
+
+  eliminar(item: Objeto) {
+    this.objetosService.eliminar(item.id);
+    this.items = this.items.filter(o => o.id !== item.id);
+    this.hideDetails();
   }
 
   normalizeString(str: string) {

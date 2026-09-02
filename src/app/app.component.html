@@ -33,8 +33,14 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" routerLink="about" data-toggle="collapse" data-target=".navbar-collapse.show"><i class="fas fa-envelope"></i> Contactos</a>
       </li>
-      <li class="nav-item ml-lg-2">
+      <li class="nav-item ml-lg-2" *ngIf="!usuario">
         <a class="nav-link btn btn-primary text-white px-3" routerLink="joinnow" data-toggle="collapse" data-target=".navbar-collapse.show">Ingresar</a>
+      </li>
+      <li class="nav-item ml-lg-2 usuario-item" *ngIf="usuario">
+        <a class="nav-link usuario-link" routerLink="joinnow" data-toggle="collapse" data-target=".navbar-collapse.show">
+          <span class="usuario-avatar">{{usuario.nombre.charAt(0)}}</span>
+          <span>{{usuario.nombre}}</span>
+        </a>
       </li>
     </ul>
   </div>

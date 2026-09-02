@@ -104,6 +104,27 @@
   border-color: #eee;
 }
 
+.usuario-link {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.usuario-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #b80000, #7a0000);
+  color: #fff;
+  font-size: 13px;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+
 @media (max-width: 991px) {
   .navbar-collapse {
     margin-top: 14px;
