@@ -1,5 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import * as ml5 from 'ml5';
+import { Component, NgZone, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ObjetosService, CATEGORIAS } from '../services/objetos.service';
+import { MlService } from '../services/ml.service';
+import { Coincidencia, TipoObjeto } from '../models/objeto.model';
+import { Deteccion, interpretarPrediccion } from '../models/clasificacion';
+
 @Component({
   selector: 'app-registro-objetos',
   templateUrl: './registro-objetos.component.html',
@@ -7,65 +12,157 @@ import * as ml5 from 'ml5';
 })
 export class RegistroObjetosComponent implements OnInit {
 
+  categorias = CATEGORIAS;
 
+  itemName = '';
+  itemDescription = '';
+  itemCategory = '';
+  itemTipo: TipoObjeto | '' = '';
+  itemLocation = '';
+  itemDate = '';
+  selectedFile: File = null;
+  selectedFileUrl: any = null;
+
+  deteccion: Deteccion = null;
+  analizando = false;
+  errorAnalisis = '';
+  featureVector: number[] = null;
+  coincidencias: Coincidencia[] = [];
+
+  constructor(
+    private objetosService: ObjetosService,
+    private mlService: MlService,
+    private router: Router,
+    private zone: NgZone
+  ) { }
 
   ngOnInit(): void {
   }
 
-  itemName: string = '';
-  itemDescription: string = '';
-  itemCategory: string = '';
-  selectedFile: File = null;
-  selectedFileUrl: any = null;
-  predictionResult: any = null;
-  constructor() { }
-
   onSubmit(form) {
-    // Obtener los valores de los campos del formulario
-    const name = this.itemName;
-    const description = this.itemDescription;
-    const category = this.itemCategory;
-    const file = this.selectedFile;
+    this.objetosService.agregar({
+      name: this.itemName,
+      description: this.itemDescription,
+      category: this.itemCategory,
+      tipo: this.itemTipo as TipoObjeto,
+      location: this.itemLocation,
+      date: this.itemDate,
+      image: this.selectedFileUrl || '',
+      predictionLabel: this.deteccion ? this.deteccion.nombre : undefined,
+      predictionConfidence: this.deteccion ? this.deteccion.confianza : undefined,
+      featureVector: this.featureVector || undefined
+    });
 
-    // Aquí podrías llamar a un servicio o API para procesar el registro del objeto
+    const destino = this.itemTipo === 'perdido' ? '/perdidos' : '/course';
 
-    // Limpiar el formulario
     form.reset();
     this.selectedFile = null;
     this.selectedFileUrl = null;
+    this.deteccion = null;
+    this.featureVector = null;
+    this.coincidencias = [];
+    this.errorAnalisis = '';
+
+    this.router.navigate([destino]);
   }
 
-  async handleFileInput(event) {
+  handleFileInput(event) {
     this.selectedFile = event.target.files[0];
-    if (this.selectedFile) {
-      const reader = new FileReader();
-      reader.readAsDataURL(this.selectedFile);
-      reader.onload = async () => {
-        this.selectedFileUrl = reader.result as string;
+    if (!this.selectedFile) {
+      return;
+    }
 
-        // Carga el modelo pre-entrenado de MobileNet
-        const imageModel = await ml5.imageClassifier('MobileNet');
+    this.deteccion = null;
+    this.featureVector = null;
+    this.coincidencias = [];
+    this.errorAnalisis = '';
 
-        // Crea un elemento HTML Image y carga la imagen seleccionada
-        const img = new Image();
-        img.src = this.selectedFileUrl;
+    const reader = new FileReader();
+    reader.readAsDataURL(this.selectedFile);
+    reader.onload = () => {
+      this.selectedFileUrl = reader.result as string;
+      this.analizarImagen(this.selectedFileUrl);
+    };
+  }
 
-        // Espera hasta que la imagen se cargue completamente
-        await new Promise((resolve) => (img.onload = resolve));
+  /** Al cambiar perdido/encontrado se recalcula contra la lista contraria. */
+  onTipoChange() {
+    this.buscarCoincidencias();
+  }
 
-        // Realiza una predicción sobre la imagen usando el modelo de ml5.js
-        imageModel.classify(img, (err, results) => {
-          if (err) {
-            console.error(err);
-            return;
-          }
+  /**
+   * Analiza la imagen con MobileNet: primero identifica qué objeto es y
+   * luego extrae su vector de características para poder compararla con
+   * las fotos ya registradas.
+   *
+   * Los callbacks del modelo corren fuera de la zona de Angular, por eso
+   * las actualizaciones de estado se hacen dentro de zone.run().
+   */
+  private async analizarImagen(dataUrl: string) {
+    this.analizando = true;
 
-          // Asigna el resultado de la predicción a la variable predictionResult
-          this.predictionResult = results[0];
+    try {
+      const img = await this.mlService.cargarImagen(dataUrl);
+      const resultado = await this.mlService.clasificar(img);
+
+      this.zone.run(() => {
+        this.deteccion = interpretarPrediccion(resultado.label, resultado.confidence);
+        if (!this.itemCategory && this.deteccion.categoria) {
+          this.itemCategory = this.deteccion.categoria;
+        }
+      });
+
+      // La extracción del vector es opcional: si falla, la app sigue
+      // funcionando con la clasificación y la coincidencia por categoría.
+      try {
+        const vector = await this.mlService.extraerVector(img);
+        this.zone.run(() => {
+          this.featureVector = vector;
         });
-      };
+      } catch (e) {
+        console.warn('No se pudo extraer el vector de características', e);
+      }
+
+      this.zone.run(() => {
+        this.analizando = false;
+        this.buscarCoincidencias();
+      });
+    } catch (e) {
+      this.zone.run(() => {
+        this.analizando = false;
+        this.errorAnalisis = 'No se pudo analizar la imagen. Revisa tu conexión e inténtalo de nuevo.';
+      });
     }
   }
+
+  /**
+   * Si registro algo perdido, las coincidencias útiles están entre lo
+   * encontrado, y viceversa.
+   */
+  private buscarCoincidencias() {
+    if (!this.deteccion && !this.featureVector) {
+      this.coincidencias = [];
+      return;
+    }
+
+    const tipoContrario: TipoObjeto = this.itemTipo === 'perdido' ? 'encontrado' : 'perdido';
+
+    this.coincidencias = this.objetosService.buscarSimilares(
+      this.featureVector,
+      this.itemCategory,
+      tipoContrario
+    );
+  }
+
+  get tipoContrarioTexto(): string {
+    return this.itemTipo === 'perdido' ? 'encontrados' : 'extraviados';
+  }
+
+  get confianzaPorcentaje(): number {
+    return this.deteccion ? Math.round(this.deteccion.confianza * 100) : 0;
+  }
+
+  porcentaje(score: number): number {
+    return Math.round(score * 100);
+  }
 }
-
-

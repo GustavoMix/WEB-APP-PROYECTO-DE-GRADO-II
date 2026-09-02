@@ -1,15 +1,27 @@
 .joinnow {
-    background-color: #eff6ff;
-    padding: 7% 5%;
+    background-color: var(--bg-soft, #f5f6fa);
+    padding: 5% 5%;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
   }
-  
+
+  .card-title {
+    font-weight: 700;
+  }
+
+  .forgot-password-link a {
+    color: var(--brand, #b80000);
+    font-size: 14px;
+  }
+
   .login {
     background-color: #ffffff;
     padding: 20px 30px;
   }
-  
+
   @media screen and (max-width:600px) {
     .joinnow {
-      padding: 20% 5%;
+      padding: 15% 5%;
     }
   }

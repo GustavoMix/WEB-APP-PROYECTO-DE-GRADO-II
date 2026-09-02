@@ -1,12 +1,84 @@
 <section class="home">
-<img src="../../assets/fondos/rojo4.jpg">
+  <div class="hero">
+    <img src="assets/fondos/rojo4.jpg" alt="">
+    <div class="hero-overlay"></div>
+    <div class="homecontent">
+      <span class="eyebrow">Unidad Educativa</span>
+      <h1>25 de Mayo</h1>
+      <p class="lead-text">Encuentra tus objetos extraviados o ayuda a otros a recuperar los suyos.</p>
+      <div class="hero-actions">
+        <a routerLink="registro" class="btn btn-lg btn-light"><i class="fas fa-plus-circle"></i> Registrar objeto</a>
+        <a routerLink="joinnow" class="btn btn-lg btn-danger"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
+      </div>
 
-<div class="homecontent">
-<h1>Unidad Educativa 25 de Mayo</h1>
-<a routerLink="registro" class="btn btn-lg btn-light">Registrar objeto</a> &nbsp;
-<a routerLink="joinnow" class="btn btn-lg btn-danger">Ingresar</a>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <strong>{{resumen.total}}</strong>
+          <span>Registrados</span>
+        </div>
+        <div class="hero-stat">
+          <strong>{{resumen.perdidos}}</strong>
+          <span>Extraviados</span>
+        </div>
+        <div class="hero-stat">
+          <strong>{{resumen.encontrados}}</strong>
+          <span>Encontrados</span>
+        </div>
+      </div>
 
+      <a routerLink="buscar" class="hero-ia">
+        <i class="fas fa-camera"></i> Nuevo: busca tu objeto subiendo una foto
+        <i class="fas fa-arrow-right"></i>
+      </a>
+    </div>
+  </div>
 
+  <div class="how-it-works">
+    <div class="page-container">
+      <h2 class="section-title">¿Cómo funciona?</h2>
+      <p class="section-subtitle">Tres pasos simples para recuperar lo que perdiste.</p>
 
-</div>
+      <div class="steps-grid">
+        <div class="step-card">
+          <div class="step-icon"><i class="fas fa-camera"></i></div>
+          <h3>1. Registra el objeto</h3>
+          <p>Sube una foto y los datos del objeto perdido o encontrado. Nuestro sistema lo identifica automáticamente con IA.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-icon"><i class="fas fa-search"></i></div>
+          <h3>2. Búscalo en la lista</h3>
+          <p>Explora los objetos extraviados o encontrados, filtra por categoría y encuentra coincidencias rápido.</p>
+        </div>
+        <div class="step-card">
+          <div class="step-icon"><i class="fas fa-handshake"></i></div>
+          <h3>3. Recupéralo</h3>
+          <p>Contacta a quien lo encontró o a su dueño y coordina la entrega dentro de la institución.</p>
+        </div>
+      </div>
+
+      <div class="quick-links">
+        <a routerLink="perdidos" class="quick-link">
+          <i class="fas fa-search"></i>
+          <div>
+            <strong>Objetos Extraviados</strong>
+            <span>Ver la lista completa</span>
+          </div>
+        </a>
+        <a routerLink="course" class="quick-link">
+          <i class="fas fa-box-open"></i>
+          <div>
+            <strong>Objetos Encontrados</strong>
+            <span>Ver la lista completa</span>
+          </div>
+        </a>
+        <a routerLink="buscar" class="quick-link quick-link-ia">
+          <i class="fas fa-camera"></i>
+          <div>
+            <strong>Buscar por foto</strong>
+            <span>Compara con IA</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
 </section>

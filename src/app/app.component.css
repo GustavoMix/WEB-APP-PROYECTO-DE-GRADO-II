@@ -1,36 +1,141 @@
-.navbar
-{
-    background-color: #ffffff;
-}
-.navbar-light .navbar-nav .nav-link
-{
-    color: #000000;
-    font-size: 16px;
+.navbar {
+  background-color: #ffffff;
+  box-shadow: 0 2px 12px rgba(20, 20, 30, 0.08);
+  padding: 0.85rem 1.5rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.navbar-light .navbar-nav .nav-link:hover
-{
-    text-decoration: underline;
-}
 .navbar-brand {
-  font-size: 20px; /* Cambiar el tamaño de fuente */
-  font-weight: bold; /* Hacer el texto en negrita */
-  color: #333; /* Cambiar el color del texto */
-  text-decoration: none; /* Eliminar el subrayado del enlace */
-  transition: all 0.2s ease-in-out; /* Agregar una transición suave */
+  font-size: 17px;
+  font-weight: 700;
+  color: #26262b;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-/* Cambiar el color del texto cuando el mouse está encima */
+.navbar-brand .brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #b80000, #7a0000);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
 .navbar-brand:hover {
-  color: #cc0000;
+  color: #b80000;
 }
 
-/* Cambiar el color del texto cuando se hace clic en el enlace */
-.navbar-brand:active {
-  color: #ff0000;
+.navbar-light .navbar-nav .nav-link {
+  color: #4a4a52;
+  font-size: 14.5px;
+  font-weight: 500;
+  padding: 0.55rem 0.85rem;
+  border-radius: 8px;
+  transition: all 0.2s ease-in-out;
+  white-space: nowrap;
 }
 
-/* Cambiar el margen derecho para separar el enlace del borde derecho */
-.navbar-brand {
-  margin-right: 20px;
+.navbar-light .navbar-nav .nav-link i {
+  color: #b0b0b8;
+  margin-right: 6px;
+  font-size: 13px;
+  width: 14px;
+  text-align: center;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color: #b80000;
+  background-color: #fdeeee;
+  text-decoration: none;
+}
+
+.navbar-light .navbar-nav .nav-link:hover i {
+  color: #b80000;
+}
+
+.navbar-light .navbar-nav .nav-item.active .nav-link {
+  color: #b80000;
+  background-color: #fdeeee;
+  font-weight: 600;
+}
+
+.navbar-light .navbar-nav .nav-item.active .nav-link i {
+  color: #b80000;
+}
+
+.navbar-nav .nav-link.btn-primary,
+.navbar-nav .nav-link.btn-primary:hover {
+  color: #fff !important;
+  background-color: var(--brand, #b80000);
+  font-weight: 600;
+}
+
+.navbar-nav .nav-link-ia i {
+  color: #7c5cd6;
+}
+
+.navbar-nav .nav-link-ia:hover {
+  color: #7c5cd6;
+  background-color: #f3f0fd;
+}
+
+.navbar-nav .nav-item.active .nav-link-ia {
+  color: #7c5cd6;
+  background-color: #f3f0fd;
+}
+
+.navbar-nav .nav-item.active .nav-link-ia i {
+  color: #7c5cd6;
+}
+
+.navbar-toggler {
+  border-radius: 8px;
+  border-color: #eee;
+}
+
+@media (max-width: 991px) {
+  .navbar-collapse {
+    margin-top: 14px;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
+  }
+
+  .navbar-nav .nav-item {
+    margin-bottom: 4px;
+  }
+
+  .navbar-nav .nav-link.btn-primary {
+    display: inline-block;
+    margin-top: 8px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 420px) {
+  .navbar-brand .brand-text {
+    display: none;
+  }
+}
+
+footer {
+  background-color: #fafafa;
+  border-top: 1px solid #eee;
+  padding: 18px 0;
+  color: #8a8a92;
+  font-size: 13.5px;
+}
+
+footer i {
+  color: #b80000;
 }

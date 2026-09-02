@@ -8,12 +8,14 @@ import { RegistroObjetosComponent } from './registro-objetos/registro-objetos.co
 import { ObjetosExtraviadosComponent } from './objetos-extraviados/objetos-extraviados.component';
 import { RegistroActividadComponent } from './registro-actividad/registro-actividad.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { BuscarFotoComponent } from './buscar-foto/buscar-foto.component';
 
 const routes: Routes = [
   {path:'',component:HomeComponent},
   {path:'course',component:CourseComponent},
   {path:'perdidos',component:ObjetosExtraviadosComponent},
   {path:'registro',component:RegistroObjetosComponent},
+  {path:'buscar',component:BuscarFotoComponent},
   {path:'joinnow',component:JoinnowComponent},
   {path:'about',component:AboutComponent},
   {path:'actividad',component:RegistroActividadComponent},
@@ -22,7 +24,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

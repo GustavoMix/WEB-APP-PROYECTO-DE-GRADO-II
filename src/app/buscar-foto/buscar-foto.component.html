@@ -1,0 +1,71 @@
+<section class="buscar-foto-page">
+  <div class="page-container">
+    <div class="hero-buscar">
+      <span class="eyebrow-ia"><i class="fas fa-brain"></i> Inteligencia artificial</span>
+      <h1 class="page-title">Buscar objeto por foto</h1>
+      <p class="page-subtitle">Sube una foto del objeto y el sistema busca coincidencias visuales entre todo lo registrado — sin necesidad de crear un reporte.</p>
+    </div>
+
+    <div class="upload-card">
+      <label for="foto-busqueda" class="upload-zone" [class.has-image]="imagenUrl">
+        <div *ngIf="!imagenUrl" class="upload-empty">
+          <i class="fas fa-camera"></i>
+          <strong>Toca para subir una foto</strong>
+          <span>o arrástrala aquí</span>
+        </div>
+        <img *ngIf="imagenUrl" [src]="imagenUrl" alt="Foto a buscar">
+      </label>
+      <input type="file" id="foto-busqueda" accept="image/*" (change)="handleFileInput($event)" hidden>
+    </div>
+
+    <div *ngIf="analizando" class="estado-box analizando">
+      <i class="fas fa-circle-notch fa-spin"></i>
+      <span>Comparando tu foto con los objetos registrados...</span>
+    </div>
+
+    <div *ngIf="errorAnalisis" class="estado-box error">
+      <i class="fas fa-exclamation-triangle"></i>
+      <span>{{ errorAnalisis }}</span>
+    </div>
+
+    <div *ngIf="deteccion && !analizando" class="deteccion-box">
+      <i class="fas fa-brain"></i>
+      <span>La IA identificó esto como: <strong>{{ deteccion.nombre }}</strong> ({{ deteccion.confianza * 100 | number:'1.0-0' }}% de confianza)</span>
+    </div>
+
+    <div *ngIf="yaBusco && !analizando && !errorAnalisis" class="resultados">
+      <h2 class="resultados-title" *ngIf="coincidencias.length">
+        {{coincidencias.length}} posible(s) coincidencia(s)
+      </h2>
+
+      <div class="row" *ngIf="coincidencias.length">
+        <div class="col-6 col-md-4 col-lg-3 mb-4" *ngFor="let c of coincidencias">
+          <div class="match-card">
+            <div class="match-image">
+              <img [src]="c.objeto.image" alt="{{c.objeto.name}}">
+              <span class="tipo-badge" [class.perdido]="c.objeto.tipo === 'perdido'" [class.encontrado]="c.objeto.tipo === 'encontrado'">
+                {{ c.objeto.tipo === 'perdido' ? 'Extraviado' : 'Encontrado' }}
+              </span>
+            </div>
+            <div class="match-body">
+              <strong>{{c.objeto.name}}</strong>
+              <span class="match-score">{{porcentaje(c.score)}}% de parecido</span>
+              <a [routerLink]="c.objeto.tipo === 'perdido' ? '/perdidos' : '/course'" class="btn btn-sm btn-outline-danger">Ver lista completa</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sin-resultados" *ngIf="!coincidencias.length">
+        <i class="fas fa-search"></i>
+        <p>No encontramos coincidencias visuales todavía.</p>
+        <small *ngIf="totalDisponibles === 0">
+          Aún no hay objetos registrados con foto analizada por la IA en este dispositivo — registra algunos desde "Registrar objeto" para empezar a comparar.
+        </small>
+        <small *ngIf="totalDisponibles > 0">
+          Se compararon {{totalDisponibles}} objeto(s) con foto analizada. Prueba con una foto más clara o desde otro ángulo.
+        </small>
+      </div>
+    </div>
+  </div>
+</section>

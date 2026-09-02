@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActividadEntry, ActividadService } from '../services/actividad.service';
 
 @Component({
   selector: 'app-registro-actividad',
@@ -7,13 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RegistroActividadComponent implements OnInit {
 
-  constructor() { }
+  limite = 10;
+  actividades: ActividadEntry[] = [];
+
+  constructor(private actividadService: ActividadService) { }
 
   ngOnInit(): void {
+    this.cargar();
   }
 
-
-  downloadInforme() {
- 
+  cargar() {
+    this.actividades = this.actividadService.listar(this.limite);
   }
 }
