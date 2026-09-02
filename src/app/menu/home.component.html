@@ -10,6 +10,25 @@
         <a routerLink="registro" class="btn btn-lg btn-light"><i class="fas fa-plus-circle"></i> Registrar objeto</a>
         <a routerLink="joinnow" class="btn btn-lg btn-danger"><i class="fas fa-sign-in-alt"></i> Ingresar</a>
       </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <strong>{{resumen.total}}</strong>
+          <span>Registrados</span>
+        </div>
+        <div class="hero-stat">
+          <strong>{{resumen.perdidos}}</strong>
+          <span>Extraviados</span>
+        </div>
+        <div class="hero-stat">
+          <strong>{{resumen.encontrados}}</strong>
+          <span>Encontrados</span>
+        </div>
+      </div>
+
+      <div class="hero-ia">
+        <i class="fas fa-brain"></i> Reconocimiento de objetos con inteligencia artificial
+      </div>
     </div>
   </div>
 

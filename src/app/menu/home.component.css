@@ -70,6 +70,46 @@
   margin-right: 6px;
 }
 
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.hero-stat {
+  flex: 1;
+  max-width: 130px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 12px;
+  padding: 12px 8px;
+  backdrop-filter: blur(4px);
+}
+
+.hero-stat strong {
+  display: block;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.hero-stat span {
+  font-size: 12px;
+  color: #f0d6d6;
+}
+
+.hero-ia {
+  margin-top: 22px;
+  font-size: 13px;
+  color: #f7dede;
+  opacity: 0.9;
+}
+
+.hero-ia i {
+  margin-right: 6px;
+}
+
 /* Cómo funciona */
 .how-it-works {
   background-color: #ffffff;
@@ -177,20 +217,49 @@
 
 @media screen and (max-width: 600px) {
   .hero img {
-    height: 100vh;
-    min-height: 520px;
+    height: auto;
+    min-height: 0;
+    position: absolute;
+    inset: 0;
+    height: 100%;
+  }
+
+  .hero {
+    display: flex;
+    align-items: center;
+    min-height: 0;
+    padding: 48px 0 40px;
+  }
+
+  .homecontent {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin: 0 auto;
+    padding: 0 20px;
   }
 
   .homecontent h1 {
-    font-size: 36px;
+    font-size: 38px;
   }
 
   .lead-text {
     font-size: 16px;
+    margin-bottom: 24px;
   }
 
   .hero-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .hero-stats {
+    gap: 8px;
+    margin-top: 26px;
+  }
+
+  .hero-stat strong {
+    font-size: 20px;
   }
 }

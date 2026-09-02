@@ -52,9 +52,27 @@
             <div *ngIf="selectedFileUrl">
               <img [src]="selectedFileUrl" class="img-fluid resultado-imagen">
             </div>
-            <div *ngIf="predictionResult" class="mt-2 ml-2">
-              <p>Objeto detectado: {{ predictionResult.label }}</p>
-              <p>Confianza: {{ predictionResult.confidence }}</p>
+
+            <div *ngIf="analizando" class="ia-box analizando">
+              <i class="fas fa-circle-notch fa-spin"></i>
+              <span>Analizando la imagen con inteligencia artificial...</span>
+            </div>
+
+            <div *ngIf="deteccion && !analizando" class="ia-box">
+              <div class="ia-header">
+                <i class="fas fa-brain"></i>
+                <span>Detectado por IA</span>
+              </div>
+              <p class="ia-objeto">{{ deteccion.nombre }}</p>
+              <div class="ia-confianza">
+                <div class="barra"><span [style.width.%]="confianzaPorcentaje"></span></div>
+                <small>{{ confianzaPorcentaje }}% de confianza · categoría sugerida: <strong>{{ deteccion.categoria }}</strong></small>
+              </div>
+            </div>
+
+            <div *ngIf="errorAnalisis" class="ia-box error">
+              <i class="fas fa-exclamation-triangle"></i>
+              <span>{{ errorAnalisis }}</span>
             </div>
           </div>
         </div>

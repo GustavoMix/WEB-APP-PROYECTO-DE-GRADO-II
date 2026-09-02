@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import * as ml5 from 'ml5';
 import { ObjetosService, CATEGORIAS } from '../services/objetos.service';
 import { TipoObjeto } from '../models/objeto.model';
+import { Deteccion, interpretarPrediccion } from '../models/clasificacion';
 
 @Component({
   selector: 'app-registro-objetos',
@@ -21,9 +22,15 @@ export class RegistroObjetosComponent implements OnInit {
   itemDate = '';
   selectedFile: File = null;
   selectedFileUrl: any = null;
-  predictionResult: any = null;
+  deteccion: Deteccion = null;
+  analizando = false;
+  errorAnalisis = '';
 
-  constructor(private objetosService: ObjetosService, private router: Router) { }
+  constructor(
+    private objetosService: ObjetosService,
+    private router: Router,
+    private zone: NgZone
+  ) { }
 
   ngOnInit(): void {
   }
@@ -37,8 +44,8 @@ export class RegistroObjetosComponent implements OnInit {
       location: this.itemLocation,
       date: this.itemDate,
       image: this.selectedFileUrl || '',
-      predictionLabel: this.predictionResult?.label,
-      predictionConfidence: this.predictionResult?.confidence
+      predictionLabel: this.deteccion ? this.deteccion.nombre : undefined,
+      predictionConfidence: this.deteccion ? this.deteccion.confianza : undefined
     });
 
     const destino = this.itemTipo === 'perdido' ? '/perdidos' : '/course';
@@ -46,40 +53,70 @@ export class RegistroObjetosComponent implements OnInit {
     form.reset();
     this.selectedFile = null;
     this.selectedFileUrl = null;
-    this.predictionResult = null;
+    this.deteccion = null;
+    this.errorAnalisis = '';
 
     this.router.navigate([destino]);
   }
 
-  async handleFileInput(event) {
+  handleFileInput(event) {
     this.selectedFile = event.target.files[0];
-    if (this.selectedFile) {
-      const reader = new FileReader();
-      reader.readAsDataURL(this.selectedFile);
-      reader.onload = async () => {
-        this.selectedFileUrl = reader.result as string;
+    if (!this.selectedFile) {
+      return;
+    }
 
-        // Carga el modelo pre-entrenado de MobileNet
-        const imageModel = await ml5.imageClassifier('MobileNet');
+    this.deteccion = null;
+    this.errorAnalisis = '';
 
-        // Crea un elemento HTML Image y carga la imagen seleccionada
-        const img = new Image();
-        img.src = this.selectedFileUrl;
+    const reader = new FileReader();
+    reader.readAsDataURL(this.selectedFile);
+    reader.onload = () => {
+      this.selectedFileUrl = reader.result as string;
+      this.analizarImagen(this.selectedFileUrl);
+    };
+  }
 
-        // Espera hasta que la imagen se cargue completamente
-        await new Promise((resolve) => (img.onload = resolve));
+  /**
+   * Clasifica la imagen con MobileNet (ml5) y traduce el resultado a una
+   * categoría del sistema. Los callbacks de ml5 corren fuera de la zona de
+   * Angular, por eso las actualizaciones se hacen dentro de zone.run().
+   */
+  private async analizarImagen(dataUrl: string) {
+    this.analizando = true;
 
-        // Realiza una predicción sobre la imagen usando el modelo de ml5.js
-        imageModel.classify(img, (err, results) => {
-          if (err) {
-            console.error(err);
+    try {
+      const imageModel = await ml5.imageClassifier('MobileNet');
+
+      const img = new Image();
+      img.src = dataUrl;
+      await new Promise((resolve) => (img.onload = resolve));
+
+      imageModel.classify(img, (err, results) => {
+        this.zone.run(() => {
+          this.analizando = false;
+
+          if (err || !results || !results.length) {
+            this.errorAnalisis = 'No se pudo analizar la imagen.';
             return;
           }
 
-          // Asigna el resultado de la predicción a la variable predictionResult
-          this.predictionResult = results[0];
+          this.deteccion = interpretarPrediccion(results[0].label, results[0].confidence);
+
+          // Sugiere la categoría detectada solo si el usuario no eligió una.
+          if (!this.itemCategory && this.deteccion.categoria) {
+            this.itemCategory = this.deteccion.categoria;
+          }
         });
-      };
+      });
+    } catch (e) {
+      this.zone.run(() => {
+        this.analizando = false;
+        this.errorAnalisis = 'No se pudo cargar el modelo de reconocimiento.';
+      });
     }
+  }
+
+  get confianzaPorcentaje(): number {
+    return this.deteccion ? Math.round(this.deteccion.confianza * 100) : 0;
   }
 }

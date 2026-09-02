@@ -42,6 +42,70 @@ button[type="submit"] {
   margin-top: 10px;
 }
 
+.ia-box {
+  background: #f7f4ff;
+  border: 1px solid #e6dfff;
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.ia-box.analizando {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #5b45a8;
+}
+
+.ia-box.error {
+  background: #fff5f5;
+  border-color: #ffd6d6;
+  color: #b80000;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ia-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #7c5cd6;
+  margin-bottom: 6px;
+}
+
+.ia-objeto {
+  font-size: 18px;
+  font-weight: 600;
+  color: #26262b;
+  margin-bottom: 8px;
+}
+
+.ia-confianza .barra {
+  height: 6px;
+  background: #e6dfff;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 6px;
+}
+
+.ia-confianza .barra span {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, #7c5cd6, #b80000);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.ia-confianza small {
+  color: #6c757d;
+}
+
 .resultado-imagen {
   max-width: 100%;
   max-height: 300px;

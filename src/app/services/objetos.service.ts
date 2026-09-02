@@ -67,6 +67,12 @@ export class ObjetosService {
     return this.objetos.filter(o => o.tipo === tipo);
   }
 
+  getResumen(): { total: number; perdidos: number; encontrados: number } {
+    const perdidos = this.getPorTipo('perdido').length;
+    const encontrados = this.getPorTipo('encontrado').length;
+    return { total: perdidos + encontrados, perdidos, encontrados };
+  }
+
   agregar(objeto: Omit<Objeto, 'id'>): Objeto {
     const nuevo: Objeto = { ...objeto, id: this.nextId() };
     this.objetos.push(nuevo);
