@@ -219,6 +219,19 @@
   font-weight: 600;
 }
 
+.ia-detectado {
+  margin-top: 10px;
+  font-size: 12.5px;
+  color: #7c5cd6;
+  background: #f7f4ff;
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.ia-detectado i {
+  margin-right: 6px;
+}
+
 .item-body {
   padding: 12px 14px 14px;
   flex: 1;
