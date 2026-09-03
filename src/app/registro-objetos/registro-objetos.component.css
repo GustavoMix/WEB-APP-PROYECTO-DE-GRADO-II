@@ -1,45 +1,159 @@
-.joinnow {
-  background-color: var(--bg-soft, #f5f6fa);
-  padding: 3% 5%;
+.registro-page {
+  background-color: var(--bg-soft, #eceef5);
   min-height: 60vh;
 }
-.card-header {
-  border-bottom: none;
-  background: linear-gradient(135deg, #b80000, #7a0000);
-  color: #fff;
-  font-size: 20px;
-  padding: 22px 20px;
-  border-radius: 12px 12px 0 0 !important;
+
+.form-wrapper {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 32px 20px 56px;
+}
+
+.form-card {
+  background: #fff;
+  border: 1px solid var(--borde, #e3e5ee);
+  border-radius: var(--radius, 12px);
+  box-shadow: var(--shadow-sm);
+  padding: 32px;
+}
+
+/* Separadores de secciones del formulario */
+.grupo-titulo {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--brand, #b80000);
+  padding-bottom: 10px;
+  margin: 8px 0 20px;
+  border-bottom: 1px solid var(--borde, #e3e5ee);
+}
+
+.grupo-titulo:not(:first-child) {
+  margin-top: 32px;
+}
+
+.grupo-titulo i {
+  margin-right: 7px;
+}
+
+/* Los campos ocupan todo el ancho disponible; antes quedaban a media
+   columna dejando el lado derecho vacío. */
+.campo {
+  margin-bottom: 18px;
+}
+
+.campos-dobles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 560px) {
+  .campos-dobles {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .form-card {
+    padding: 22px 18px;
+  }
 }
 
 label {
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13.5px;
   color: #4a4a52;
+  margin-bottom: 6px;
+  display: block;
 }
 
 .form-control {
   border-radius: 8px;
-  border-color: #e2e2e8;
+  border-color: var(--borde, #e3e5ee);
+  padding: 10px 14px;
+  height: auto;
+  font-size: 14.5px;
+}
+
+.form-control::placeholder {
+  color: #b4b4bd;
 }
 
 .form-control:focus {
-  border-color: #b80000;
+  border-color: var(--brand, #b80000);
   box-shadow: 0 0 0 3px rgba(184, 0, 0, 0.12);
 }
 
-button[type="submit"] {
-  width: 100%;
-  padding: 10px;
-  font-weight: 600;
+/* Zona de carga de la foto: reemplaza al input de archivo nativo, que se
+   veía como dos controles superpuestos. */
+.zona-foto {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 170px;
+  border: 2px dashed #d5d7e2;
+  border-radius: 10px;
+  background: #fafbfd;
+  cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+  overflow: hidden;
+  padding: 20px;
+  text-align: center;
+  margin-bottom: 0;
 }
 
-.custom-file-label::after {
-  content: "Examinar";
+.zona-foto:hover {
+  border-color: var(--brand, #b80000);
+  background: #fff7f7;
+}
+
+.zona-foto i {
+  font-size: 30px;
+  color: var(--brand, #b80000);
+  margin-bottom: 6px;
+}
+
+.zona-foto strong {
+  font-size: 14.5px;
+  color: var(--ink, #26262b);
+}
+
+.zona-foto span {
+  font-size: 12.5px;
+  color: var(--muted, #6c757d);
+}
+
+.zona-foto.con-imagen {
+  padding: 0;
+  border-style: solid;
+  border-color: var(--borde, #e3e5ee);
+  min-height: 0;
+}
+
+.zona-foto img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+  display: block;
+}
+
+.btn-registrar {
+  width: 100%;
+  padding: 12px;
+  font-weight: 600;
+  font-size: 15px;
+  margin-top: 28px;
+}
+
+.btn-registrar i {
+  margin-right: 6px;
 }
 
 .image-result-container {
-  margin-top: 10px;
+  margin-top: 14px;
 }
 
 .ia-box {
@@ -106,9 +220,10 @@ button[type="submit"] {
   color: #6c757d;
 }
 
+/* Coincidencias sugeridas por la IA */
 .coincidencias {
   margin-top: 14px;
-  border: 1px solid #eee;
+  border: 1px solid var(--borde, #e3e5ee);
   border-radius: 10px;
   padding: 14px;
   background: #fff;
@@ -145,6 +260,7 @@ button[type="submit"] {
   object-fit: cover;
   border-radius: 8px;
   flex-shrink: 0;
+  background: #f2f3f7;
 }
 
 .coincidencia-info {
@@ -172,12 +288,4 @@ button[type="submit"] {
 
 .match-score.por-imagen {
   color: #7c5cd6;
-}
-
-.resultado-imagen {
-  max-width: 100%;
-  max-height: 300px;
-  height: auto;
-  border-radius: 5px;
-  margin-bottom: 10px;
 }
