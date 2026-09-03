@@ -1,11 +1,11 @@
 <section class="listado">
   <div class="page-container">
-    <h1 class="page-title">Objetos Encontrados</h1>
-    <p class="page-subtitle">Objetos que alguien encontró. Revisa si alguno es tuyo.</p>
+    <h1 class="page-title">{{titulo}}</h1>
+    <p class="page-subtitle">{{subtitulo}}</p>
 
     <div class="search-bar">
       <i class="fas fa-search"></i>
-      <input type="text" [(ngModel)]="searchTerm" placeholder="Buscar por nombre o descripción...">
+      <input type="text" name="busqueda" [(ngModel)]="searchTerm" placeholder="Buscar por nombre o descripción...">
     </div>
 
     <ul class="category-pills">
@@ -44,12 +44,16 @@
       <h3>{{selectedItem.name}}</h3>
       <span class="category-badge static">{{selectedItem.category}}</span>
       <p>{{selectedItem.description}}</p>
-      <div class="contacto-box" *ngIf="selectedItemInfo?.foundBy || selectedItemInfo?.cellphone">
-        <strong>Encontrado por</strong>
-        <div *ngIf="selectedItemInfo.foundBy"><i class="fas fa-user"></i> {{selectedItemInfo.foundBy}}</div>
-        <div *ngIf="selectedItemInfo.cellphone">
-          <i class="fas fa-phone"></i> <a href="tel:{{selectedItemInfo.cellphone}}">{{selectedItemInfo.cellphone}}</a>
+      <div class="contacto-box" *ngIf="selectedItem.foundBy || selectedItem.cellphone">
+        <strong>{{etiquetaContacto}}</strong>
+        <div *ngIf="selectedItem.foundBy"><i class="fas fa-user"></i> {{selectedItem.foundBy}}</div>
+        <div *ngIf="selectedItem.cellphone">
+          <i class="fas fa-phone"></i> <a href="tel:{{selectedItem.cellphone}}">{{selectedItem.cellphone}}</a>
         </div>
+      </div>
+
+      <div class="ia-detectado" *ngIf="selectedItem.predictionLabel">
+        <i class="fas fa-brain"></i> Identificado por IA como <strong>{{selectedItem.predictionLabel}}</strong>
       </div>
 
       <div class="recuperado-accion" *ngIf="selectedItem.estado !== 'recuperado'; else yaRecuperado">

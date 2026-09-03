@@ -8,18 +8,19 @@ describe('AboutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AboutComponent ]
-    })
-    .compileComponents();
-  });
+      declarations: [AboutComponent]
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(AboutComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('se crea correctamente', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('muestra el título de la sección', () => {
+    expect(fixture.nativeElement.querySelector('h1').textContent).toContain('Sobre Nosotros');
   });
 });
