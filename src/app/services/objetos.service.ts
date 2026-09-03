@@ -95,7 +95,13 @@ export class ObjetosService {
   agregar(objeto: Omit<Objeto, 'id'>): Objeto {
     const nuevo: Objeto = { ...objeto, id: this.nextId(), estado: 'activo' };
     this.objetos.push(nuevo);
-    this.persist();
+
+    if (!this.persist()) {
+      // Si no entró en el almacenamiento, no se deja el objeto solo en memoria:
+      // se revierte para que la lista refleje lo que realmente quedó guardado.
+      this.objetos.pop();
+      throw new Error('ALMACENAMIENTO_LLENO');
+    }
 
     this.actividadService.registrar(
       objeto.tipo === 'perdido' ? 'Objeto extraviado registrado' : 'Objeto encontrado registrado',
@@ -103,6 +109,17 @@ export class ObjetosService {
     );
 
     return nuevo;
+  }
+
+  eliminar(id: number): void {
+    const objeto = this.objetos.find(o => o.id === id);
+    if (!objeto) {
+      return;
+    }
+
+    this.objetos = this.objetos.filter(o => o.id !== id);
+    this.persist();
+    this.actividadService.registrar('Objeto eliminado', `${objeto.name} · ${objeto.category}`);
   }
 
   marcarRecuperado(id: number): void {
@@ -173,7 +190,19 @@ export class ObjetosService {
     return this.objetos.reduce((max, o) => Math.max(max, o.id), 0) + 1;
   }
 
-  private persist(): void {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(this.objetos));
+  /**
+   * Guarda en localStorage. Devuelve false si el navegador rechazó la escritura
+   * por falta de espacio (las fotos ocupan bastante aunque se compriman), para
+   * que quien llama pueda avisarle al usuario en vez de perder el dato en
+   * silencio.
+   */
+  private persist(): boolean {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(this.objetos));
+      return true;
+    } catch (e) {
+      console.error('No se pudo guardar en localStorage', e);
+      return false;
+    }
   }
 }

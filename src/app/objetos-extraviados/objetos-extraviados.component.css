@@ -165,6 +165,60 @@
   font-size: 14px;
 }
 
+.btn-eliminar {
+  display: block;
+  width: 100%;
+  margin-top: 10px;
+  color: #9a9aa2;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.btn-eliminar:hover {
+  color: #b80000;
+  text-decoration: none;
+}
+
+.confirmar-eliminar {
+  margin-top: 14px;
+  background: #fff5f5;
+  border: 1px solid #ffd6d6;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  font-size: 13px;
+  color: #b80000;
+}
+
+.confirmar-eliminar div {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.contacto-box {
+  background: var(--bg-soft, #f5f6fa);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 14px;
+  font-size: 14px;
+}
+
+.contacto-box strong {
+  display: block;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  color: var(--muted, #6c757d);
+  margin-bottom: 6px;
+}
+
+.contacto-box a {
+  color: var(--brand, #b80000);
+  font-weight: 600;
+}
+
 .item-body {
   padding: 12px 14px 14px;
   flex: 1;
