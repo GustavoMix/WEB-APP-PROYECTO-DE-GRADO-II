@@ -1,69 +1,84 @@
 
-<section class="joinnow">
-<div class="container d-flex justify-content-center align-items-center">
-  <div class="card w-100 my-5" style="max-width: 640px;">
-    <h1 class="card-header text-center">Registrar Objeto Perdido o Encontrado</h1>
-    <div class="card-body">
+<section class="registro-page">
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <h1>Registrar un objeto</h1>
+      <p>Sube una foto y la inteligencia artificial identificará el objeto por ti.</p>
+    </div>
+  </div>
+
+  <div class="form-wrapper">
+    <div class="form-card">
       <form (ngSubmit)="onSubmit(form)" #form="ngForm">
-        <div class="form-row">
-          <div class="col-md-6 mb-3">
-            <label for="name">Nombre del objeto</label>
-            <input type="text" id="name" name="name" class="form-control" required [(ngModel)]="itemName">
-          </div>
-          <div class="col-md-6 mb-3">
+
+        <p class="grupo-titulo"><i class="fas fa-box"></i> Sobre el objeto</p>
+
+        <div class="campo">
+          <label for="name">Nombre del objeto</label>
+          <input type="text" id="name" name="name" class="form-control" placeholder="Ej: Mochila azul" required [(ngModel)]="itemName">
+        </div>
+
+        <div class="campos-dobles">
+          <div class="campo">
             <label for="tipo">¿Perdido o encontrado?</label>
             <select id="tipo" name="tipo" class="form-control" required [(ngModel)]="itemTipo" (ngModelChange)="onTipoChange()">
-              <option value="">--Seleccione una opción--</option>
-              <option value="perdido">Perdido</option>
-              <option value="encontrado">Encontrado</option>
+              <option value="">Seleccione una opción</option>
+              <option value="perdido">Lo perdí</option>
+              <option value="encontrado">Lo encontré</option>
             </select>
           </div>
-        </div>
-        <div class="form-row">
-          <div class="col-md-6 mb-3">
-            <label for="category">Categoría del objeto</label>
+          <div class="campo">
+            <label for="category">Categoría</label>
             <select id="category" name="category" class="form-control" required [(ngModel)]="itemCategory">
-              <option value="">--Seleccione una opción--</option>
+              <option value="">Seleccione una opción</option>
               <option *ngFor="let cat of categorias" [value]="cat">{{cat}}</option>
             </select>
           </div>
         </div>
-        <div class="form-group">
-          <label for="description">Descripción del objeto</label>
-          <textarea id="description" name="description" class="form-control" rows="3" required [(ngModel)]="itemDescription"></textarea>
+
+        <div class="campo">
+          <label for="description">Descripción</label>
+          <textarea id="description" name="description" class="form-control" rows="3" placeholder="Detalles que ayuden a identificarlo: color, marca, señas particulares..." required [(ngModel)]="itemDescription"></textarea>
         </div>
-        <div class="form-row">
-          <div class="col-md-6 mb-3">
-            <label for="location">Ubicación donde se perdió o encontró el objeto</label>
-            <input type="text" id="location" name="location" class="form-control" required [(ngModel)]="itemLocation">
+
+        <div class="campos-dobles">
+          <div class="campo">
+            <label for="location">¿Dónde ocurrió?</label>
+            <input type="text" id="location" name="location" class="form-control" placeholder="Ej: Cancha de futbol" required [(ngModel)]="itemLocation">
           </div>
-          <div class="col-md-6 mb-3">
-            <label for="date">Fecha en que se perdió o encontró el objeto</label>
+          <div class="campo">
+            <label for="date">¿Cuándo?</label>
             <input type="date" id="date" name="date" class="form-control" required [(ngModel)]="itemDate">
           </div>
         </div>
-        <div class="form-row">
-          <div class="col-md-6 mb-3">
-            <label for="contacto-nombre">Tu nombre (para que te contacten)</label>
+
+        <p class="grupo-titulo"><i class="fas fa-address-card"></i> Tus datos de contacto</p>
+
+        <div class="campos-dobles">
+          <div class="campo">
+            <label for="contacto-nombre">Tu nombre</label>
             <input type="text" id="contacto-nombre" name="contacto-nombre" class="form-control" required [(ngModel)]="contactoNombre">
           </div>
-          <div class="col-md-6 mb-3">
+          <div class="campo">
             <label for="contacto-telefono">Tu teléfono</label>
-            <input type="tel" id="contacto-telefono" name="contacto-telefono" class="form-control" required [(ngModel)]="contactoTelefono">
+            <input type="tel" id="contacto-telefono" name="contacto-telefono" class="form-control" placeholder="Ej: 70012345" required [(ngModel)]="contactoTelefono">
           </div>
         </div>
 
-        <div class="form-group">
-          <label for="image">Foto del objeto</label>
-          <div class="custom-file">
-            <input type="file" class="custom-file-input" id="image" name="image" accept="image/*" (change)="handleFileInput($event)">
-            <label class="custom-file-label" for="image">Seleccione una imagen</label>
-          </div>
-          <div class="image-result-container">
-            <div *ngIf="selectedFileUrl">
-              <img [src]="selectedFileUrl" class="img-fluid resultado-imagen">
-            </div>
+        <p class="grupo-titulo"><i class="fas fa-camera"></i> Foto del objeto</p>
 
+        <div class="campo">
+          <label for="image" class="zona-foto" [class.con-imagen]="selectedFileUrl">
+            <ng-container *ngIf="!selectedFileUrl">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <strong>Toca para subir una foto</strong>
+              <span>La IA la analizará automáticamente</span>
+            </ng-container>
+            <img *ngIf="selectedFileUrl" [src]="selectedFileUrl" alt="Foto del objeto">
+          </label>
+          <input type="file" id="image" name="image" accept="image/*" (change)="handleFileInput($event)" hidden>
+
+          <div class="image-result-container">
             <div *ngIf="analizando" class="ia-box analizando">
               <i class="fas fa-circle-notch fa-spin"></i>
               <span>Analizando la imagen con inteligencia artificial...</span>
@@ -109,11 +124,10 @@
           <span>{{ errorGuardado }}</span>
         </div>
 
-        <div class="form-group text-center">
-          <button type="submit" class="btn btn-primary">Registrar</button>
-        </div>
+        <button type="submit" class="btn btn-primary btn-registrar">
+          <i class="fas fa-check"></i> Registrar objeto
+        </button>
       </form>
     </div>
   </div>
-</div>
 </section>

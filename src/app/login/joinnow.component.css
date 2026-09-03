@@ -1,9 +1,49 @@
 .joinnow {
-    background-color: var(--bg-soft, #f5f6fa);
-    padding: 5% 5%;
+    background-color: var(--bg-soft, #eceef5);
+    padding: 48px 20px 56px;
     min-height: 70vh;
     display: flex;
     align-items: center;
+  }
+
+  .card {
+    border: 1px solid var(--borde, #e3e5ee);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card-body {
+    padding: 32px;
+  }
+
+  label {
+    font-weight: 500;
+    font-size: 13.5px;
+    color: #4a4a52;
+    margin-bottom: 6px;
+  }
+
+  .form-control {
+    border-radius: 8px;
+    border-color: var(--borde, #e3e5ee);
+    padding: 10px 14px;
+    height: auto;
+    font-size: 14.5px;
+  }
+
+  .form-control:focus {
+    border-color: var(--brand, #b80000);
+    box-shadow: 0 0 0 3px rgba(184, 0, 0, 0.12);
+  }
+
+  .btn-block {
+    padding: 11px;
+    font-weight: 600;
+  }
+
+  @media (max-width: 560px) {
+    .card-body {
+      padding: 24px 18px;
+    }
   }
 
   .card-title {
