@@ -1,73 +1,228 @@
 .about {
-    background-color: #f8f9fa; /* Fondo gris claro */
-    min-height: 60vh;
-  }
-
-  .about-container {
-    max-width: 760px;
-  }
-
-  .about h1 {
-    color: #333; /* Texto gris oscuro */
-    font-weight: 700;
-  }
-
-  .about p {
-    font-size: 17px; /* Tamaño de fuente grande */
-    line-height: 1.6em; /* Espaciado entre líneas */
-    margin-bottom: 20px; /* Espacio abajo */
-    color: #555;
-  }
-  
-  .follow {
-    margin-top: 50px; /* Espacio arriba */
-  }
-  
-  .follow h4 {
-    color: #333; /* Texto gris oscuro */
-    margin-bottom: 20px; /* Espacio abajo */
-  }
-  
-  .follow a {
-    display: inline-block;
-    background-color: #007bff; /* Fondo azul */
-    color: #fff; /* Texto blanco */
-    border-radius: 999px; /* Bordes redondeados */
-    padding: 10px 20px; /* Espacio arriba y abajo, espacio izquierda y derecha */
-    margin: 4px; /* Espacio entre botones */
-    font-size: 14px;
-    font-weight: 500;
-    transition: transform 0.15s ease;
-  }
-
-  .follow a:hover {
-    transform: translateY(-2px);
-  }
-
-  .follow a i {
-    margin-right: 6px;
-  }
-  
-  .follow a:hover {
-    background-color: #0056b3; /* Fondo azul oscuro cuando el cursor está encima */
-  }
-
-  /* Estilos para el enlace de Facebook */
-.follow a.facebook {
-  background-color: #3B5998; /* Fondo azul oscuro */
+  background-color: var(--bg-soft, #f5f6fa);
 }
 
-/* Estilos para el enlace de Youtube */
-.follow a.youtube {
-  background-color: #FF0000; /* Fondo rojo */
+/* Encabezado */
+.about-hero {
+  background: linear-gradient(135deg, #b80000, #6d0000);
+  color: #fff;
+  padding: 56px 0 48px;
+  text-align: center;
 }
 
-/* Estilos para el enlace de Instagram */
-.follow a.instagram {
-  background-color: #E4405F; /* Fondo rosa */
+.about-hero .eyebrow {
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffc9c9;
+  margin-bottom: 8px;
 }
 
-/* Estilos para el enlace de Twitter */
-.follow a.twitter {
-  background-color: #1DA1F2; /* Fondo celeste */
+.about-hero h1 {
+  font-size: 40px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.about-hero p {
+  font-size: 16px;
+  color: #f5dede;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.about-hero .page-container {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+/* Tarjetas de valores */
+.valores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-bottom: 32px;
+}
+
+.valor-card {
+  background: #fff;
+  border-radius: var(--radius, 12px);
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(20, 20, 30, 0.06));
+  padding: 28px 24px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.valor-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(20, 20, 30, 0.1));
+}
+
+.valor-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #fdeeee;
+  color: #b80000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 19px;
+  margin-bottom: 16px;
+}
+
+.valor-card h3 {
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.valor-card p {
+  font-size: 14.5px;
+  line-height: 1.65;
+  color: var(--muted, #6c757d);
+  margin-bottom: 0;
+}
+
+/* Llamado a la acción */
+.cta-card {
+  background: #fff;
+  border-radius: var(--radius, 12px);
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(20, 20, 30, 0.06));
+  padding: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+  border-left: 4px solid #b80000;
+}
+
+.cta-card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.cta-card p {
+  color: var(--muted, #6c757d);
+  font-size: 14.5px;
+  margin-bottom: 0;
+}
+
+.cta-acciones {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cta-acciones .btn i {
+  margin-right: 6px;
+}
+
+.btn-outline-primary {
+  color: #b80000;
+  border-color: #b80000;
+}
+
+.btn-outline-primary:hover {
+  background-color: #b80000;
+  border-color: #b80000;
+  color: #fff;
+}
+
+/* Datos de contacto */
+.contacto-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.contacto-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #fff;
+  border-radius: var(--radius, 12px);
+  padding: 18px 20px;
+  box-shadow: var(--shadow-sm, 0 2px 8px rgba(20, 20, 30, 0.06));
+}
+
+.contacto-item i {
+  font-size: 18px;
+  color: #b80000;
+  flex-shrink: 0;
+}
+
+.contacto-item strong {
+  display: block;
+  font-size: 14px;
+}
+
+.contacto-item span {
+  font-size: 13px;
+  color: var(--muted, #6c757d);
+  word-break: break-word;
+}
+
+/* Redes sociales */
+.follow {
+  text-align: center;
+  padding-bottom: 8px;
+}
+
+.follow h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+
+.follow-links {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.follow-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #fff;
+  border-radius: 999px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.follow-links a:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md, 0 8px 24px rgba(20, 20, 30, 0.1));
+  color: #fff;
+  text-decoration: none;
+}
+
+.follow-links a.facebook { background-color: #3b5998; }
+.follow-links a.youtube { background-color: #ff0000; }
+.follow-links a.instagram { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
+.follow-links a.whatsapp { background-color: #25d366; }
+
+@media (max-width: 600px) {
+  .about-hero {
+    padding: 40px 20px 36px;
+  }
+
+  .about-hero h1 {
+    font-size: 30px;
+  }
+
+  .cta-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }

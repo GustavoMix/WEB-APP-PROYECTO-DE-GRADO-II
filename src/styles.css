@@ -31,6 +31,29 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/*
+ * El contenido se estira para empujar el pie de página hasta abajo. Sin esto,
+ * en las páginas con poco contenido el footer quedaba a media pantalla y
+ * dejaba una franja blanca vacía debajo.
+ */
+html, body {
+  height: 100%;
+}
+
+app-root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+app-root > router-outlet + * {
+  flex: 1 0 auto;
+}
+
+app-root > footer {
+  flex-shrink: 0;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
@@ -95,6 +118,46 @@ a {
 .page-subtitle {
   color: var(--muted);
   margin-bottom: 32px;
+}
+
+/*
+ * Encabezado común de las páginas internas: una banda blanca con un acento
+ * de color, para que todas compartan la misma estructura visual en lugar de
+ * arrancar con un título suelto sobre el fondo.
+ */
+.page-hero {
+  background: #ffffff;
+  border-bottom: 1px solid #ececf0;
+  padding: 36px 20px 30px;
+}
+
+.page-hero-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  border-left: 4px solid var(--brand);
+  padding-left: 18px;
+}
+
+.page-hero h1 {
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.page-hero p {
+  color: var(--muted);
+  margin-bottom: 0;
+  font-size: 15px;
+}
+
+@media (max-width: 600px) {
+  .page-hero {
+    padding: 28px 16px 24px;
+  }
+
+  .page-hero h1 {
+    font-size: 24px;
+  }
 }
 
 ::-webkit-scrollbar {

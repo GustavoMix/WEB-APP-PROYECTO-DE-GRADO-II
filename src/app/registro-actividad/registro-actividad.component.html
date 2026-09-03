@@ -1,8 +1,12 @@
 <section class="actividad-page">
-  <div class="page-container">
-    <h1 class="page-title">Registro de Actividad</h1>
-    <p class="page-subtitle">Historial real de registros y objetos recuperados en este dispositivo.</p>
+  <div class="page-hero">
+    <div class="page-hero-inner">
+      <h1>Registro de Actividad</h1>
+      <p>Historial real de registros y objetos recuperados en este dispositivo.</p>
+    </div>
+  </div>
 
+  <div class="page-container">
     <div class="toolbar">
       <select class="form-control" [(ngModel)]="limite" (ngModelChange)="cargar()">
         <option [ngValue]="10">Mostrar 10 actividades</option>
