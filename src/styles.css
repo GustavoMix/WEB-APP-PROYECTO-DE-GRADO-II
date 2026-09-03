@@ -7,11 +7,14 @@
   --brand-light: #ff4d4d;
   --ink: #26262b;
   --muted: #6c757d;
-  --bg-soft: #f5f6fa;
+  /* Un gris con algo de cuerpo: con un fondo casi blanco las tarjetas
+     blancas se perdían y todo se veía lavado. */
+  --bg-soft: #eceef5;
+  --borde: #e3e5ee;
   --radius: 12px;
-  --shadow-sm: 0 2px 8px rgba(20, 20, 30, 0.06);
-  --shadow-md: 0 8px 24px rgba(20, 20, 30, 0.1);
-  --shadow-lg: 0 16px 40px rgba(20, 20, 30, 0.16);
+  --shadow-sm: 0 1px 3px rgba(20, 20, 40, 0.06), 0 4px 12px rgba(20, 20, 40, 0.05);
+  --shadow-md: 0 8px 24px rgba(20, 20, 40, 0.12);
+  --shadow-lg: 0 16px 40px rgba(20, 20, 40, 0.18);
 }
 
 * {
@@ -126,15 +129,15 @@ a {
  * arrancar con un título suelto sobre el fondo.
  */
 .page-hero {
-  background: #ffffff;
-  border-bottom: 1px solid #ececf0;
-  padding: 36px 20px 30px;
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-darker) 100%);
+  color: #ffffff;
+  padding: 40px 20px 34px;
 }
 
 .page-hero-inner {
   max-width: 1140px;
   margin: 0 auto;
-  border-left: 4px solid var(--brand);
+  border-left: 3px solid rgba(255, 255, 255, 0.5);
   padding-left: 18px;
 }
 
@@ -142,10 +145,11 @@ a {
   font-size: 30px;
   font-weight: 700;
   margin-bottom: 6px;
+  color: #ffffff;
 }
 
 .page-hero p {
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.85);
   margin-bottom: 0;
   font-size: 15px;
 }

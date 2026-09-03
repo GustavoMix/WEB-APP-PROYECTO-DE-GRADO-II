@@ -4,7 +4,7 @@
 
 /* Encabezado */
 .about-hero {
-  background: linear-gradient(135deg, #b80000, #6d0000);
+  background: linear-gradient(135deg, var(--brand, #b80000) 0%, var(--brand-darker, #4d0000) 100%);
   color: #fff;
   padding: 56px 0 48px;
   text-align: center;
