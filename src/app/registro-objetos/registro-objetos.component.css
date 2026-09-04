@@ -85,6 +85,17 @@ label {
   box-shadow: 0 0 0 3px rgba(184, 0, 0, 0.12);
 }
 
+/* Los campos incompletos solo se marcan después del primer intento de
+   envío, para no recibir al usuario con el formulario en rojo. */
+.mostrar-errores .form-control.ng-invalid {
+  border-color: #e08585;
+  background-color: #fffafa;
+}
+
+.mostrar-errores .form-control.ng-invalid:focus {
+  box-shadow: 0 0 0 3px rgba(224, 133, 133, 0.2);
+}
+
 /* Zona de carga de la foto: reemplaza al input de archivo nativo, que se
    veía como dos controles superpuestos. */
 .zona-foto {

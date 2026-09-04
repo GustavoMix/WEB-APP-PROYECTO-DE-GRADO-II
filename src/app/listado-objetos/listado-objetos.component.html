@@ -48,6 +48,18 @@
       <h3>{{selectedItem.name}}</h3>
       <span class="category-badge static">{{selectedItem.category}}</span>
       <p>{{selectedItem.description}}</p>
+
+      <div class="datos-objeto" *ngIf="selectedItem.location || selectedItem.date">
+        <div *ngIf="selectedItem.location">
+          <i class="fas fa-map-marker-alt"></i>
+          <span>{{selectedItem.location}}</span>
+        </div>
+        <div *ngIf="selectedItem.date">
+          <i class="fas fa-calendar-day"></i>
+          <span>{{selectedItem.date | date:'dd/MM/yyyy'}}</span>
+        </div>
+      </div>
+
       <div class="contacto-box" *ngIf="selectedItem.foundBy || selectedItem.cellphone">
         <strong>{{etiquetaContacto}}</strong>
         <div *ngIf="selectedItem.foundBy"><i class="fas fa-user"></i> {{selectedItem.foundBy}}</div>

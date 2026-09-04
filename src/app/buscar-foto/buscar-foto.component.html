@@ -1,11 +1,13 @@
 <section class="buscar-foto-page">
-  <div class="page-container">
-    <div class="hero-buscar">
+  <div class="page-hero">
+    <div class="page-hero-inner">
       <span class="eyebrow-ia"><i class="fas fa-brain"></i> Inteligencia artificial</span>
-      <h1 class="page-title">Buscar objeto por foto</h1>
-      <p class="page-subtitle">Sube una foto del objeto y el sistema busca coincidencias visuales entre todo lo registrado — sin necesidad de crear un reporte.</p>
+      <h1>Buscar objeto por foto</h1>
+      <p>Sube una foto y el sistema busca coincidencias visuales entre todo lo registrado, sin necesidad de crear un reporte.</p>
     </div>
+  </div>
 
+  <div class="page-container">
     <div class="upload-card">
       <label for="foto-busqueda" class="upload-zone" [class.has-image]="imagenUrl">
         <div *ngIf="!imagenUrl" class="upload-empty">
