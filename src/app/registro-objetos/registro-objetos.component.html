@@ -14,41 +14,47 @@
         <p class="grupo-titulo"><i class="fas fa-box"></i> Sobre el objeto</p>
 
         <div class="campo">
-          <label for="name">Nombre del objeto</label>
-          <input type="text" id="name" name="name" class="form-control" placeholder="Ej: Mochila azul" required [(ngModel)]="itemName">
+          <label for="name">Nombre del objeto <span class="obligatorio">*</span></label>
+          <input type="text" id="name" name="name" class="form-control" placeholder="Ej: Mochila azul" required [(ngModel)]="itemName" #nombreCtrl="ngModel">
+            <small class="error-campo" *ngIf="intentoEnvio && nombreCtrl.invalid">Escribe el nombre del objeto</small>
         </div>
 
         <div class="campos-dobles">
           <div class="campo">
-            <label for="tipo">¿Perdido o encontrado?</label>
-            <select id="tipo" name="tipo" class="form-control" required [(ngModel)]="itemTipo" (ngModelChange)="onTipoChange()">
+            <label for="tipo">¿Perdido o encontrado? <span class="obligatorio">*</span></label>
+            <select id="tipo" name="tipo" class="form-control" required [(ngModel)]="itemTipo" (ngModelChange)="onTipoChange()" #tipoCtrl="ngModel">
               <option value="">Seleccione una opción</option>
               <option value="perdido">Lo perdí</option>
               <option value="encontrado">Lo encontré</option>
             </select>
+            <small class="error-campo" *ngIf="intentoEnvio && tipoCtrl.invalid">Indica si lo perdiste o lo encontraste</small>
           </div>
           <div class="campo">
-            <label for="category">Categoría</label>
-            <select id="category" name="category" class="form-control" required [(ngModel)]="itemCategory">
+            <label for="category">Categoría <span class="obligatorio">*</span></label>
+            <select id="category" name="category" class="form-control" required [(ngModel)]="itemCategory" #categoriaCtrl="ngModel">
               <option value="">Seleccione una opción</option>
               <option *ngFor="let cat of categorias" [value]="cat">{{cat}}</option>
             </select>
+            <small class="error-campo" *ngIf="intentoEnvio && categoriaCtrl.invalid">Elige una categoría</small>
           </div>
         </div>
 
         <div class="campo">
-          <label for="description">Descripción</label>
-          <textarea id="description" name="description" class="form-control" rows="3" placeholder="Detalles que ayuden a identificarlo: color, marca, señas particulares..." required [(ngModel)]="itemDescription"></textarea>
+          <label for="description">Descripción <span class="obligatorio">*</span></label>
+          <textarea id="description" name="description" class="form-control" rows="3" placeholder="Detalles que ayuden a identificarlo: color, marca, señas particulares..." required [(ngModel)]="itemDescription" #descripcionCtrl="ngModel"></textarea>
+            <small class="error-campo" *ngIf="intentoEnvio && descripcionCtrl.invalid">Describe el objeto</small>
         </div>
 
         <div class="campos-dobles">
           <div class="campo">
-            <label for="location">¿Dónde ocurrió?</label>
-            <input type="text" id="location" name="location" class="form-control" placeholder="Ej: Cancha de futbol" required [(ngModel)]="itemLocation">
+            <label for="location">¿Dónde ocurrió? <span class="obligatorio">*</span></label>
+            <input type="text" id="location" name="location" class="form-control" placeholder="Ej: Cancha de futbol" required [(ngModel)]="itemLocation" #ubicacionCtrl="ngModel">
+            <small class="error-campo" *ngIf="intentoEnvio && ubicacionCtrl.invalid">Indica dónde ocurrió</small>
           </div>
           <div class="campo">
-            <label for="date">¿Cuándo?</label>
-            <input type="date" id="date" name="date" class="form-control" required [(ngModel)]="itemDate">
+            <label for="date">¿Cuándo? <span class="obligatorio">*</span></label>
+            <input type="date" id="date" name="date" class="form-control" required [(ngModel)]="itemDate" #fechaCtrl="ngModel">
+            <small class="error-campo" *ngIf="intentoEnvio && fechaCtrl.invalid">Indica la fecha</small>
           </div>
         </div>
 
@@ -56,12 +62,14 @@
 
         <div class="campos-dobles">
           <div class="campo">
-            <label for="contacto-nombre">Tu nombre</label>
-            <input type="text" id="contacto-nombre" name="contacto-nombre" class="form-control" required [(ngModel)]="contactoNombre">
+            <label for="contacto-nombre">Tu nombre <span class="obligatorio">*</span></label>
+            <input type="text" id="contacto-nombre" name="contacto-nombre" class="form-control" required [(ngModel)]="contactoNombre" #contactoNombreCtrl="ngModel">
+            <small class="error-campo" *ngIf="intentoEnvio && contactoNombreCtrl.invalid">Escribe tu nombre</small>
           </div>
           <div class="campo">
-            <label for="contacto-telefono">Tu teléfono</label>
-            <input type="tel" id="contacto-telefono" name="contacto-telefono" class="form-control" placeholder="Ej: 70012345" required [(ngModel)]="contactoTelefono">
+            <label for="contacto-telefono">Tu teléfono <span class="obligatorio">*</span></label>
+            <input type="tel" id="contacto-telefono" name="contacto-telefono" class="form-control" placeholder="Ej: 70012345" required [(ngModel)]="contactoTelefono" #contactoTelefonoCtrl="ngModel">
+            <small class="error-campo" *ngIf="intentoEnvio && contactoTelefonoCtrl.invalid">Escribe tu teléfono</small>
           </div>
         </div>
 

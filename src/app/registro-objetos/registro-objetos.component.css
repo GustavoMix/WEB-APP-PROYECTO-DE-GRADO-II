@@ -88,12 +88,36 @@ label {
 /* Los campos incompletos solo se marcan después del primer intento de
    envío, para no recibir al usuario con el formulario en rojo. */
 .mostrar-errores .form-control.ng-invalid {
-  border-color: #e08585;
+  border-color: #e05a5a;
   background-color: #fffafa;
 }
 
 .mostrar-errores .form-control.ng-invalid:focus {
-  box-shadow: 0 0 0 3px rgba(224, 133, 133, 0.2);
+  box-shadow: 0 0 0 3px rgba(224, 90, 90, 0.18);
+}
+
+.obligatorio {
+  color: #e05a5a;
+  font-weight: 700;
+}
+
+.error-campo {
+  display: none;
+  color: #c0392b;
+  font-size: 12.5px;
+  margin-top: 5px;
+}
+
+.error-campo::before {
+  content: "\f06a";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  margin-right: 5px;
+}
+
+/* Solo se muestran tras intentar enviar, no mientras se escribe. */
+.mostrar-errores .error-campo {
+  display: block;
 }
 
 /* Zona de carga de la foto: reemplaza al input de archivo nativo, que se
