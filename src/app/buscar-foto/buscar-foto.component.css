@@ -3,34 +3,21 @@
   min-height: 70vh;
 }
 
-.hero-buscar {
-  text-align: center;
-  max-width: 560px;
-  margin: 0 auto 36px;
-}
-
 .eyebrow-ia {
   display: inline-block;
-  background: linear-gradient(135deg, #7c5cd6, #4a2fa8);
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   color: #fff;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.4px;
-  padding: 6px 14px;
+  padding: 5px 13px;
   border-radius: 999px;
-  margin-bottom: 14px;
+  margin-bottom: 12px;
 }
 
 .eyebrow-ia i {
   margin-right: 6px;
-}
-
-.hero-buscar .page-title {
-  margin-bottom: 10px;
-}
-
-.hero-buscar .page-subtitle {
-  margin-bottom: 0;
 }
 
 .upload-card {

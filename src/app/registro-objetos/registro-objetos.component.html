@@ -9,7 +9,7 @@
 
   <div class="form-wrapper">
     <div class="form-card">
-      <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+      <form (ngSubmit)="onSubmit(form)" #form="ngForm" [class.mostrar-errores]="intentoEnvio" novalidate>
 
         <p class="grupo-titulo"><i class="fas fa-box"></i> Sobre el objeto</p>
 

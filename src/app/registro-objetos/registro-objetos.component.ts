@@ -31,6 +31,8 @@ export class RegistroObjetosComponent implements OnInit {
   analizando = false;
   errorAnalisis = '';
   errorGuardado = '';
+  /** Se activa al primer envío, para no marcar campos en rojo antes de tiempo. */
+  intentoEnvio = false;
   featureVector: number[] = null;
   coincidencias: Coincidencia[] = [];
 
@@ -53,6 +55,14 @@ export class RegistroObjetosComponent implements OnInit {
 
   onSubmit(form) {
     this.errorGuardado = '';
+    this.intentoEnvio = true;
+
+    // Sin esta comprobación el formulario se podía enviar vacío y se
+    // registraba un objeto sin nombre ni descripción.
+    if (form.invalid) {
+      this.errorGuardado = 'Completa los campos obligatorios antes de registrar el objeto.';
+      return;
+    }
 
     try {
       this.objetosService.agregar({
@@ -84,6 +94,7 @@ export class RegistroObjetosComponent implements OnInit {
     this.featureVector = null;
     this.coincidencias = [];
     this.errorAnalisis = '';
+    this.intentoEnvio = false;
 
     this.router.navigate([destino]);
   }

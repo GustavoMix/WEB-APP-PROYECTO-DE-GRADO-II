@@ -207,6 +207,26 @@
   justify-content: center;
 }
 
+.datos-objeto {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin: 14px 0;
+  font-size: 13.5px;
+  color: var(--muted, #6c757d);
+}
+
+.datos-objeto > div {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.datos-objeto i {
+  color: var(--brand, #b80000);
+  font-size: 13px;
+}
+
 .contacto-box {
   background: var(--bg-soft, #f5f6fa);
   border-radius: 8px;
