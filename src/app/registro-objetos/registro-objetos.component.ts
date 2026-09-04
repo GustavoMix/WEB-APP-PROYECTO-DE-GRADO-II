@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ObjetosService, CATEGORIAS } from '../services/objetos.service';
 import { MlService } from '../services/ml.service';
@@ -41,7 +41,8 @@ export class RegistroObjetosComponent implements OnInit {
     private mlService: MlService,
     private authService: AuthService,
     private router: Router,
-    private zone: NgZone
+    private zone: NgZone,
+    private host: ElementRef<HTMLElement>
   ) { }
 
   ngOnInit(): void {
@@ -60,7 +61,8 @@ export class RegistroObjetosComponent implements OnInit {
     // Sin esta comprobación el formulario se podía enviar vacío y se
     // registraba un objeto sin nombre ni descripción.
     if (form.invalid) {
-      this.errorGuardado = 'Completa los campos obligatorios antes de registrar el objeto.';
+      this.errorGuardado = 'Faltan datos obligatorios. Revisa los campos marcados en rojo.';
+      this.irAlPrimerCampoIncompleto();
       return;
     }
 
@@ -97,6 +99,22 @@ export class RegistroObjetosComponent implements OnInit {
     this.intentoEnvio = false;
 
     this.router.navigate([destino]);
+  }
+
+  /**
+   * Lleva la vista al primer campo que falta. Sin esto el aviso de error se
+   * dibujaba junto al botón, fuera de la pantalla, y parecía que pulsar
+   * "Registrar" no hacía absolutamente nada.
+   */
+  private irAlPrimerCampoIncompleto(): void {
+    setTimeout(() => {
+      const campo = this.host.nativeElement.querySelector<HTMLElement>('.form-control.ng-invalid');
+      if (!campo) {
+        return;
+      }
+      campo.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      campo.focus({ preventScroll: true });
+    });
   }
 
   handleFileInput(event) {
